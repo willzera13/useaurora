@@ -89,27 +89,6 @@ justify-content:center;
 }
 
 .whatsapp-float img{width:30px}
-
-footer{
-background:#fff;
-margin-top:20px;
-padding:40px 20px;
-border-top:1px solid #eee;
-}
-
-.footer-content{
-display:flex;
-justify-content:center;
-align-items:center;
-gap:40px;
-flex-wrap:wrap;
-text-align:center;
-}
-
-.footer-icons img{
-width:28px;
-height:28px;
-}
 </style>
 </head>
 
@@ -121,10 +100,13 @@ height:28px;
 
 <div class="carousel">
 <div class="slides" id="slides">
-<div class="slide"><img src="imagens/produto1.jpg"></div>
-<div class="slide"><img src="imagens/produto2.jpg"></div>
-<div class="slide"><img src="imagens/produto3.jpg"></div>
+<div class="slide"><img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9"></div>
+<div class="slide"><img src="https://images.unsplash.com/photo-1512496015851-a90fb38ba796"></div>
+<div class="slide"><img src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad"></div>
 </div>
+<button class="nav prev" onclick="moveSlide(-1)">❮</button>
+<button class="nav next" onclick="moveSlide(1)">❯</button>
+<div class="dots" id="dots"></div>
 </div>
 
 <div class="destaque">
@@ -143,6 +125,30 @@ height:28px;
 <div class="container" id="produtos"></div>
 
 <script>
+let index=0;
+const slides=document.getElementById('slides');
+const total=slides.children.length;
+const dots=document.getElementById('dots');
+
+for(let i=0;i<total;i++){
+const d=document.createElement('span');
+d.className='dot';
+dots.appendChild(d)
+}
+
+function update(){
+slides.style.transform=`translateX(-${index*100}%)`;
+[...dots.children].forEach((d,i)=>d.classList.toggle('active',i===index))
+}
+
+function moveSlide(dir){
+index=(index+dir+total)%total;
+update()
+}
+
+setInterval(()=>moveSlide(1),4000);
+update();
+
 const container=document.getElementById('produtos');
 const destaqueContainer=document.getElementById('destaques');
 
