@@ -103,6 +103,33 @@ text-align:center;
 border-radius:6px;
 margin-top:5px;
 text-decoration:none;
+transition: all 0.25s ease;
+position: relative;
+overflow: hidden;
+}
+
+.btn:hover{
+transform: translateY(-3px) scale(1.03);
+box-shadow: 0 8px 18px rgba(37, 211, 102, 0.35);
+}
+
+.btn::after{
+content:"";
+position:absolute;
+top:0;
+left:-100%;
+width:100%;
+height:100%;
+background: linear-gradient(120deg, transparent, rgba(255,255,255,0.4), transparent);
+transition: 0.5s;
+}
+
+.btn:hover::after{
+left:100%;
+}
+
+.btn:active{
+transform: scale(0.97);
 }
 
 /* FOOTER */
@@ -146,8 +173,27 @@ border-radius:50%;
 display:flex;
 justify-content:center;
 align-items:center;
+transition: transform 0.3s ease;
+animation: pulseWhatsapp 2s infinite;
 }
+
 .whatsapp-float img{width:30px}
+
+.whatsapp-float:hover{
+transform: scale(1.15) rotate(8deg);
+}
+
+@keyframes pulseWhatsapp{
+0%{
+box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.5);
+}
+70%{
+box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+}
+100%{
+box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+}
+}
 </style>
 </head>
 
