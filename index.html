@@ -1,174 +1,234 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+<!DOCTYPE html><html lang="pt-br">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Use Aurora</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-
   <style>
-    *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}body{
+  background:linear-gradient(180deg,#f8f5f2 0%, #efe7eb 100%);
+  color:#333
+}
 
-    body{
-      background:linear-gradient(180deg,#f8f5f2 0%, #efe7eb 100%);
-      color:#333
-    }
+header{background:#fff;padding:10px;display:flex;justify-content:center;align-items:center;box-shadow:0 2px 10px rgba(0,0,0,0.05)}
+header img{width:100%;max-width:500px;height:auto;object-fit:contain}
 
-    header{
-      background:#fff;
-      padding:10px;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      box-shadow:0 2px 10px rgba(0,0,0,0.05)
-    }
+.carousel{max-width:1100px;margin:20px auto;border-radius:12px;overflow:hidden;position:relative}
+.slides{display:flex;transition:transform .5s ease}
+.slide{min-width:100%}
+.slide img{width:100%;height:260px;object-fit:cover}
 
-    header img{
-      width:100%;
-      max-width:300px;
-      height:auto;
-      object-fit:contain
-    }
+.nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.4);color:#fff;border:none;padding:10px;cursor:pointer}
+.prev{left:10px}
+.next{right:10px}
 
-    .carousel{max-width:1100px;margin:20px auto;border-radius:12px;overflow:hidden;position:relative}
-    .slides{display:flex;transition:transform .5s ease}
-    .slide{min-width:100%}
-    .slide img{width:100%;height:260px;object-fit:cover}
+.dots{position:absolute;bottom:10px;width:100%;text-align:center}
+.dot{display:inline-block;width:8px;height:8px;background:#fff;border-radius:50%;margin:3px;opacity:.5}
+.dot.active{opacity:1}
 
-    .nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.4);color:#fff;border:none;padding:10px;cursor:pointer}
-    .prev{left:10px}
-    .next{right:10px}
+.categorias{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;padding:15px;max-width:900px;margin:auto}
+.categoria{text-align:center;padding:8px;background:#ead3d9;border-radius:20px;font-size:14px;cursor:pointer}
+.categoria.active{background:#b07a86;color:#fff}
 
-    .dots{position:absolute;bottom:10px;width:100%;text-align:center}
-    .dot{display:inline-block;width:8px;height:8px;background:#fff;border-radius:50%;margin:3px;opacity:.5}
-    .dot.active{opacity:1}
+.container{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;padding:20px}
 
-    .categorias{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;padding:15px;max-width:900px;margin:auto}
-    .categoria{text-align:center;padding:8px;background:#ead3d9;border-radius:20px;font-size:14px;cursor:pointer}
-    .categoria.active{background:#b07a86;color:#fff}
+.produto{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.08)}
+.produto img{width:100%;height:200px;object-fit:cover;background:#f0f0f0}
 
-    .container{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;padding:20px}
+.info{padding:10px}
+.nome{font-size:14px;font-weight:600}
+.descricao{font-size:12px;color:#666;margin:5px 0}
+.preco{color:#b07a86;font-weight:bold;margin:5px 0}
 
-    .produto{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.08)}
-    .produto img{width:100%;height:200px;object-fit:cover;background:#f0f0f0}
+.btn{display:block;text-align:center;background:#25D366;color:#fff;padding:8px;border-radius:6px;text-decoration:none;font-size:13px}
 
-    .info{padding:10px}
-    .nome{font-size:14px;font-weight:600}
-    .descricao{font-size:12px;color:#666;margin:5px 0}
-    .preco{color:#b07a86;font-weight:bold;margin:5px 0}
+.destaque{max-width:1100px;margin:30px auto;padding:20px}
+.destaque h2{text-align:center;margin-bottom:15px}
+.destaque-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
 
-    .btn{
-      display:block;
-      text-align:center;
-      background:#25D366;
-      color:#fff;
-      padding:8px;
-      border-radius:6px;
-      text-decoration:none;
-      font-size:13px
-    }
+.sobre{max-width:900px;margin:40px auto;padding:20px;background:#fff;border-radius:12px;box-shadow:0 4px 10px rgba(0,0,0,0.05)}
 
-    .destaque{max-width:1100px;margin:30px auto;padding:20px}
-    .destaque h2{text-align:center;margin-bottom:15px}
-    .destaque-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+/* ANIMAÇÃO GLOBAL CLIQUE */
+.btn, .categoria, .nav, .footer-icons a {
+  transition: all 0.2s ease;
+}
 
-    .sobre{max-width:900px;margin:40px auto;padding:20px;background:#fff;border-radius:12px;box-shadow:0 4px 10px rgba(0,0,0,0.05)}
+.btn:hover, .categoria:hover, .nav:hover, .footer-icons a:hover {
+  transform: scale(1.05);
+  opacity:0.9;
+}
 
-    .whatsapp-float{
-      position:fixed;
-      bottom:20px;
-      right:20px;
-      background:#25D366;
-      border-radius:50%;
-      width:60px;
-      height:60px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    }
+/* BOTÃO WHATS */
+.whatsapp-float{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:#25D366;
+  border-radius:50%;
+  width:60px;
+  height:60px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  animation:pulse 2s infinite;
+}
 
-    .whatsapp-float img{width:30px}
+.whatsapp-float img{width:30px}
 
-    footer{
-      background:#fff;
-      margin-top:20px;
-      padding:40px 20px;
-      border-top:1px solid #eee;
-    }
+@keyframes pulse{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.1)}
+  100%{transform:scale(1)}
+}
 
-    .footer-content{
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      gap:40px;
-      flex-wrap:wrap;
-      text-align:center;
-    }
+/* RODAPÉ ARRUMADO */
+footer{
+  background:#fff;
+  margin-top:20px;
+  padding:40px 20px;
+  border-top:1px solid #eee;
+}
 
-    .footer-icons img{
-      width:28px;
-      height:28px;
-    }
+.footer-content{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:40px;
+  flex-wrap:wrap;
+  text-align:center;
+}
+
+.footer-box{
+  min-width:200px;
+}
+
+.footer-icons{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:15px;
+}
+
+.footer-icons img{
+  width:28px;
+  height:28px;
+  object-fit:contain;
+}
+
   </style>
 </head>
-
-<body>
-
-<!-- ✅ LOGO INSERIDA AQUI -->
-<header>
+<body><header>
   <img src="logo.png" alt="Use Aurora">
-</header>
-
-<div class="carousel">
+</header><div class="carousel">
   <div class="slides" id="slides">
     <div class="slide"><img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9"></div>
     <div class="slide"><img src="https://images.unsplash.com/photo-1512496015851-a90fb38ba796"></div>
     <div class="slide"><img src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad"></div>
   </div>
-</div>
+  <button class="nav prev" onclick="moveSlide(-1)">❮</button>
+  <button class="nav next" onclick="moveSlide(1)">❯</button>
+  <div class="dots" id="dots"></div>
+</div><div class="destaque">
+  <h2>Produtos em Destaque</h2>
+  <div class="destaque-grid" id="destaques"></div>
+</div><div class="categorias">
+  <div class="categoria active" onclick="filtrar('todos', this)">Todos</div>
+  <div class="categoria" onclick="filtrar('brinco', this)">Brincos</div>
+  <div class="categoria" onclick="filtrar('colar', this)">Colares</div>
+  <div class="categoria" onclick="filtrar('pulseira', this)">Pulseiras</div>
+  <div class="categoria" onclick="filtrar('anel', this)">Anéis</div>
+</div><div class="container" id="produtos"></div><div class="sobre">
+  <h2>Sobre Gabriela</h2>
+  <p>Gabriela criou a Use Aurora com o objetivo de trazer elegância e autoestima para mulheres através de semijoias selecionadas com muito cuidado.</p>
+</div><script>
+let index=0;
+const slides=document.getElementById('slides');
+const total=slides.children.length;
+const dots=document.getElementById('dots');
+for(let i=0;i<total;i++){const d=document.createElement('span');d.className='dot';dots.appendChild(d)}
+function update(){slides.style.transform=`translateX(-${index*100}%)`;[...dots.children].forEach((d,i)=>d.classList.toggle('active',i===index))}
+function moveSlide(dir){index=(index+dir+total)%total;update()}
+setInterval(()=>moveSlide(1),4000);update()
 
-<div class="container" id="produtos"></div>
-
-<script>
 const container=document.getElementById('produtos');
+const destaqueContainer=document.getElementById('destaques');
 
 const produtos=[];
+const tipos=['brinco','colar','pulseira','anel'];
 
-for(let i=1;i<=6;i++){
+// REDUÇÃO DE PRODUTOS (MENOS POLUIÇÃO)
+for(let i=1;i<=18;i++){
+  const tipo=tipos[i%4];
   produtos.push({
-    nome:"Produto "+i,
-    preco:"R$ 49,90",
-    img:`imagens/produto${i}.jpg`
+    nome: tipo+" "+i,
+    tipo,
+    descricao:"Peça elegante e delicada para qualquer ocasião",
+    preco:`R$ ${29+(i%5)*10},90`,
+    img:"https://images.unsplash.com/photo-1617038220319-276d3cfab638"
   })
 }
 
-function render(){
-  produtos.forEach(p=>{
-    const mensagem = encodeURIComponent("Quero " + p.nome);
-
+function render(lista){
+  container.innerHTML='';
+  lista.forEach(p=>{
     const div=document.createElement('div');
     div.className='produto';
-
     div.innerHTML=`
       <img src="${p.img}">
       <div class="info">
         <div class="nome">${p.nome}</div>
+        <div class="descricao">${p.descricao}</div>
         <div class="preco">${p.preco}</div>
-        <a class="btn" href="https://wa.me/554799216167?text=${mensagem}" target="_blank">
-          Comprar
-        </a>
+        <a class="btn" href="https://wa.me/554799216167?text=Quero%20${p.nome}">Comprar</a>
       </div>
     `;
     container.appendChild(div);
   })
 }
 
-render();
-</script>
+function renderDestaques(){
+  produtos.slice(0,3).forEach(p=>{
+    const div=document.createElement('div');
+    div.className='produto';
+    div.innerHTML=`
+      <img src="${p.img}">
+      <div class="info">
+        <div class="nome">${p.nome}</div>
+        <div class="preco">${p.preco}</div>
+      </div>
+    `;
+    destaqueContainer.appendChild(div);
+  })
+}
 
-<a class="whatsapp-float" href="https://wa.me/554799216167" target="_blank">
+function filtrar(tipo,el){
+  document.querySelectorAll('.categoria').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  if(tipo==='todos') return render(produtos);
+  render(produtos.filter(p=>p.tipo===tipo));
+}
+
+render(produtos);
+renderDestaques();
+</script><footer>
+  <div class="footer-content">
+    <div class="footer-box">
+      <h3>Use Aurora</h3>
+      <p>Semijoias que valorizam sua beleza</p>
+    </div><div class="footer-box footer-icons">
+  <a href="https://www.instagram.com/use.aaurora?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">
+    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png">
+  </a>
+  <a href="https://wa.me/554799216167" target="_blank">
+    <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png">
+  </a>
+  <a href="#">
+    <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png">
+  </a>
+</div>
+
+  </div>
+</footer><a class="whatsapp-float" href="https://wa.me/554799216167" target="_blank">
   <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png">
-</a>
-
-</body>
+</a></body>
 </html>
