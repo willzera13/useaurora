@@ -230,7 +230,7 @@ update();
 
 const container = document.getElementById('produtos');
 
-fetch("https://opensheet.elk.sh/1wrHEulJvrvhqPHDxWUUh8fXgq5AKeBI7E6AKB8cBtRw/Sheet1")
+fetch("https://opensheet.elk.sh/1wrHEulJvrvhqPHDxWUUh8fXgq5AKeBI7E6AKB8cBtRw/0")
 .then(res => res.json())
 .then(produtos => {
 
@@ -257,7 +257,7 @@ container.appendChild(div);
 
 })
 .catch(err => {
-console.error("Erro ao carregar produtos:", err);
+console.error(err);
 container.innerHTML = "<p style='padding:20px'>Erro ao carregar produtos.</p>";
 });
 
