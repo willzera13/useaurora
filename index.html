@@ -34,6 +34,39 @@ max-width:300px;
 .slide{min-width:100%}
 .slide img{width:100%;height:260px;object-fit:cover}
 
+.nav{
+position:absolute;
+top:50%;
+transform:translateY(-50%);
+background:rgba(0,0,0,0.4);
+color:#fff;
+border:none;
+padding:10px;
+cursor:pointer
+}
+
+.prev{left:10px}
+.next{right:10px}
+
+.dots{
+position:absolute;
+bottom:10px;
+width:100%;
+text-align:center
+}
+
+.dot{
+display:inline-block;
+width:8px;
+height:8px;
+background:#fff;
+border-radius:50%;
+margin:3px;
+opacity:.5
+}
+
+.dot.active{opacity:1}
+
 /* PRODUTOS */
 .container{
 display:grid;
@@ -129,16 +162,48 @@ Use Aurora
 </header>
 
 <div class="carousel">
-<div class="slides">
+<div class="slides" id="slides">
 <div class="slide"><img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9"></div>
 <div class="slide"><img src="https://images.unsplash.com/photo-1512496015851-a90fb38ba796"></div>
 <div class="slide"><img src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad"></div>
 </div>
+
+<button class="nav prev" onclick="moveSlide(-1)">❮</button>
+<button class="nav next" onclick="moveSlide(1)">❯</button>
+
+<div class="dots" id="dots"></div>
 </div>
 
 <div class="container" id="produtos"></div>
 
 <script>
+// CARROSSEL
+let index=0;
+const slides=document.getElementById('slides');
+const total=slides.children.length;
+const dots=document.getElementById('dots');
+
+for(let i=0;i<total;i++){
+const d=document.createElement('span');
+d.className='dot';
+dots.appendChild(d);
+}
+
+function update(){
+slides.style.transform = `translateX(-${index*100}%)`;
+[...dots.children].forEach((d,i)=>d.classList.toggle('active',i===index));
+}
+
+function moveSlide(dir){
+index=(index+dir+total)%total;
+update();
+}
+
+setInterval(()=>moveSlide(1),4000);
+update();
+
+
+// PRODUTOS
 const container=document.getElementById('produtos');
 
 const imagens=[
@@ -170,7 +235,6 @@ container.appendChild(div);
 <footer>
 <div class="footer-content">
 
-<!-- LOGO -->
 <div class="footer-logo">
 <img src="imagens/logo.png"
 onerror="this.style.display='none'; document.getElementById('logoFooterFallback').style.display='block'">
@@ -180,13 +244,11 @@ Use Aurora
 </div>
 </div>
 
-<!-- TEXTO -->
 <div class="footer-text">
 <h3>Use Aurora</h3>
 <p>Semijoias que valorizam sua beleza</p>
 </div>
 
-<!-- ICONES -->
 <div class="footer-icons">
 <a href="https://www.instagram.com/use.aaurora" target="_blank">
 <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png">
