@@ -27,6 +27,7 @@ box-shadow:0 2px 10px rgba(0,0,0,0.05)
 header img{
 width:100%;
 max-width:300px;
+height:auto;
 object-fit:contain
 }
 
@@ -212,27 +213,21 @@ border-top:1px solid #eee;
 
 .footer-content{
 display:flex;
-justify-content:space-between;
+justify-content:center;
 align-items:center;
+gap:40px;
 flex-wrap:wrap;
-max-width:1100px;
-margin:auto;
-}
-
-.footer-logo img{
-max-width:120px;
+text-align:center;
 }
 
 .footer-box{
-text-align:center;
-flex:1;
+min-width:200px;
 }
 
 .footer-icons{
 display:flex;
-justify-content:flex-end;
+justify-content:center;
 gap:15px;
-flex:1;
 }
 
 .footer-icons img{
@@ -290,17 +285,17 @@ const dots=document.getElementById('dots');
 for(let i=0;i<total;i++){
 const d=document.createElement('span');
 d.className='dot';
-dots.appendChild(d);
+dots.appendChild(d)
 }
 
 function update(){
-slides.style.transform = `translateX(-${index*100}%)`;
-[...dots.children].forEach((d,i)=>d.classList.toggle('active',i===index));
+slides.style.transform=`translateX(-${index*100}%)`;
+[...dots.children].forEach((d,i)=>d.classList.toggle('active',i===index))
 }
 
 function moveSlide(dir){
 index=(index+dir+total)%total;
-update();
+update()
 }
 
 setInterval(()=>moveSlide(1),4000);
@@ -327,9 +322,9 @@ produtos.push({
 nome: tipo+" "+i,
 tipo,
 descricao:"Peça elegante e delicada para qualquer ocasião",
-preco: `R$ ${29+(i%5)*10},90`,
+preco:`R$ ${29+(i%5)*10},90`,
 img: imagens[i % imagens.length]
-});
+})
 }
 
 function render(lista){
@@ -351,7 +346,7 @@ div.innerHTML=`
 `;
 
 container.appendChild(div);
-});
+})
 }
 
 function renderDestaques(){
@@ -366,7 +361,7 @@ div.innerHTML=`
 </div>
 `;
 destaqueContainer.appendChild(div);
-});
+})
 }
 
 function filtrar(tipo,el){
@@ -383,16 +378,12 @@ renderDestaques();
 <footer>
 <div class="footer-content">
 
-<div class="footer-logo">
-<img src="imagens/logo.png" alt="logo">
-</div>
-
 <div class="footer-box">
 <h3>Use Aurora</h3>
 <p>Semijoias que valorizam sua beleza</p>
 </div>
 
-<div class="footer-icons">
+<div class="footer-box footer-icons">
 <a href="https://www.instagram.com/use.aaurora" target="_blank">
 <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png">
 </a>
