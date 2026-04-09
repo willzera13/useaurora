@@ -24,7 +24,9 @@ align-items:center;
 box-shadow:0 2px 10px rgba(0,0,0,0.05)
 }
 
-header img{max-width:300px}
+header img{
+max-width:300px;
+}
 
 /* CARROSSEL */
 .carousel{max-width:1100px;margin:20px auto;border-radius:12px;overflow:hidden;position:relative}
@@ -65,29 +67,6 @@ opacity:.5
 
 .dot.active{opacity:1}
 
-/* CATEGORIAS */
-#categorias{
-display:flex;
-gap:10px;
-justify-content:center;
-flex-wrap:wrap;
-margin:20px 0;
-}
-
-.cat-btn{
-padding:8px 14px;
-border:none;
-border-radius:20px;
-cursor:pointer;
-background:#eee;
-transition:.2s;
-}
-
-.cat-btn.active{
-background:#000;
-color:#fff;
-}
-
 /* PRODUTOS */
 .container{
 display:grid;
@@ -112,9 +91,9 @@ object-fit:cover
 .info{padding:10px}
 
 .nome{font-weight:600}
+
 .preco{color:#b07a86;font-weight:bold}
 
-/* BOTÃO */
 .btn{
 display:block;
 background:#25D366;
@@ -149,6 +128,10 @@ transition: 0.5s;
 left:100%;
 }
 
+.btn:active{
+transform: scale(0.97);
+}
+
 /* FOOTER */
 footer{
 background:#fff;
@@ -165,9 +148,18 @@ max-width:1000px;
 margin:auto;
 }
 
-.footer-logo img{max-width:120px}
-.footer-text{text-align:center}
-.footer-icons img{width:28px;margin-left:10px}
+.footer-logo img{
+max-width:120px;
+}
+
+.footer-text{
+text-align:center;
+}
+
+.footer-icons img{
+width:28px;
+margin-left:10px;
+}
 
 /* WHATS */
 .whatsapp-float{
@@ -192,9 +184,15 @@ transform: scale(1.15) rotate(8deg);
 }
 
 @keyframes pulseWhatsapp{
-0%{box-shadow:0 0 0 0 rgba(37,211,102,0.5)}
-70%{box-shadow:0 0 0 15px rgba(37,211,102,0)}
-100%{box-shadow:0 0 0 0 rgba(37,211,102,0)}
+0%{
+box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.5);
+}
+70%{
+box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+}
+100%{
+box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+}
 }
 </style>
 </head>
@@ -202,7 +200,11 @@ transform: scale(1.15) rotate(8deg);
 <body>
 
 <header>
-<img src="imagens/logo.png" alt="Logo Use Aurora">
+<img src="imagens/logo.png"
+onerror="this.style.display='none'; document.getElementById('logoTopFallback').style.display='block'">
+<div id="logoTopFallback" style="display:none;font-size:24px;color:#b07a86;font-weight:600;">
+Use Aurora
+</div>
 </header>
 
 <div class="carousel">
@@ -214,17 +216,14 @@ transform: scale(1.15) rotate(8deg);
 
 <button class="nav prev" onclick="moveSlide(-1)">❮</button>
 <button class="nav next" onclick="moveSlide(1)">❯</button>
+
 <div class="dots" id="dots"></div>
 </div>
-
-<!-- CATEGORIAS -->
-<div id="categorias"></div>
 
 <div class="container" id="produtos"></div>
 
 <script>
-
-/* CARROSSEL */
+// CARROSSEL
 let index=0;
 const slides=document.getElementById('slides');
 const total=slides.children.length;
@@ -237,7 +236,7 @@ dots.appendChild(d);
 }
 
 function update(){
-slides.style.transform=`translateX(-${index*100}%)`;
+slides.style.transform = `translateX(-${index*100}%)`;
 [...dots.children].forEach((d,i)=>d.classList.toggle('active',i===index));
 }
 
@@ -250,86 +249,45 @@ setInterval(()=>moveSlide(1),4000);
 update();
 
 
-/* =========================
-   PRODUTOS + CATEGORIAS
-========================= */
+// PRODUTOS
+const container=document.getElementById('produtos');
 
-const container = document.getElementById('produtos');
-const catContainer = document.getElementById('categorias');
+const imagens=[
+"https://images.unsplash.com/photo-1617038220319-276d3cfab638",
+"https://images.unsplash.com/photo-1608042314453-ae338d80c427",
+"https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f"
+];
 
-let allProducts = [];
-let currentCategory = "todos";
+for(let i=1;i<=9;i++){
+const nome="Produto "+i;
+const msg=encodeURIComponent("Quero "+nome);
 
-fetch("https://opensheet.elk.sh/1wrHEulJvrvhqPHDxWUUh8fXgq5AKeBI7E6AKB8cBtRw/1")
-.then(res => res.json())
-.then(produtos => {
-
-allProducts = produtos;
-
-renderCategories();
-renderProducts("todos");
-
-});
-
-function renderCategories(){
-
-const cats = ["todos", ...new Set(allProducts.map(p => p.categoria))];
-
-catContainer.innerHTML = "";
-
-cats.forEach(cat => {
-const btn = document.createElement("button");
-btn.innerText = cat;
-btn.className = "cat-btn";
-
-if(cat === "todos") btn.classList.add("active");
-
-btn.onclick = () => {
-currentCategory = cat;
-document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
-btn.classList.add("active");
-renderProducts(cat);
-};
-
-catContainer.appendChild(btn);
-});
-
-}
-
-function renderProducts(category){
-
-container.innerHTML = "";
-
-allProducts
-.filter(p => category === "todos" ? true : p.categoria === category)
-.forEach(p => {
-
-const msg = encodeURIComponent("Quero " + p.nome);
-
-const div = document.createElement('div');
+const div=document.createElement('div');
 div.className='produto';
 
 div.innerHTML=`
-<img src="${p.imagem}">
+<img src="${imagens[i%3]}">
 <div class="info">
-<div class="nome">${p.nome}</div>
-<div class="preco">R$ ${p["preço"]}</div>
+<div class="nome">${nome}</div>
+<div class="preco">R$ 49,90</div>
 <a class="btn" href="https://wa.me/554799216167?text=${msg}" target="_blank">Comprar</a>
 </div>
 `;
 
 container.appendChild(div);
-});
-
 }
-
 </script>
 
 <footer>
 <div class="footer-content">
 
 <div class="footer-logo">
-<img src="imagens/logo.png">
+<img src="imagens/logo.png"
+onerror="this.style.display='none'; document.getElementById('logoFooterFallback').style.display='block'">
+
+<div id="logoFooterFallback" style="display:none;font-weight:600;color:#b07a86;">
+Use Aurora
+</div>
 </div>
 
 <div class="footer-text">
@@ -350,7 +308,7 @@ container.appendChild(div);
 </div>
 </footer>
 
-<a class="whatsapp-float" href="https://wa.me/554799216167">
+<a class="whatsapp-float" href="https://wa.me/554799216167" target="_blank">
 <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png">
 </a>
 
