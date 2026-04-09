@@ -65,6 +65,29 @@ opacity:.5
 
 .dot.active{opacity:1}
 
+/* CATEGORIAS */
+#categorias{
+display:flex;
+gap:10px;
+justify-content:center;
+flex-wrap:wrap;
+margin:20px 0;
+}
+
+.cat-btn{
+padding:8px 14px;
+border:none;
+border-radius:20px;
+cursor:pointer;
+background:#eee;
+transition:.2s;
+}
+
+.cat-btn.active{
+background:#000;
+color:#fff;
+}
+
 /* PRODUTOS */
 .container{
 display:grid;
@@ -194,6 +217,9 @@ transform: scale(1.15) rotate(8deg);
 <div class="dots" id="dots"></div>
 </div>
 
+<!-- CATEGORIAS -->
+<div id="categorias"></div>
+
 <div class="container" id="produtos"></div>
 
 <script>
@@ -225,18 +251,58 @@ update();
 
 
 /* =========================
-   PRODUTOS (GOOGLE SHEETS)
-   ========================= */
+   PRODUTOS + CATEGORIAS
+========================= */
 
 const container = document.getElementById('produtos');
+const catContainer = document.getElementById('categorias');
+
+let allProducts = [];
+let currentCategory = "todos";
 
 fetch("https://opensheet.elk.sh/1wrHEulJvrvhqPHDxWUUh8fXgq5AKeBI7E6AKB8cBtRw/1")
 .then(res => res.json())
 .then(produtos => {
 
+allProducts = produtos;
+
+renderCategories();
+renderProducts("todos");
+
+});
+
+function renderCategories(){
+
+const cats = ["todos", ...new Set(allProducts.map(p => p.categoria))];
+
+catContainer.innerHTML = "";
+
+cats.forEach(cat => {
+const btn = document.createElement("button");
+btn.innerText = cat;
+btn.className = "cat-btn";
+
+if(cat === "todos") btn.classList.add("active");
+
+btn.onclick = () => {
+currentCategory = cat;
+document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
+btn.classList.add("active");
+renderProducts(cat);
+};
+
+catContainer.appendChild(btn);
+});
+
+}
+
+function renderProducts(category){
+
 container.innerHTML = "";
 
-produtos.forEach(p => {
+allProducts
+.filter(p => category === "todos" ? true : p.categoria === category)
+.forEach(p => {
 
 const msg = encodeURIComponent("Quero " + p.nome);
 
@@ -247,7 +313,7 @@ div.innerHTML=`
 <img src="${p.imagem}">
 <div class="info">
 <div class="nome">${p.nome}</div>
-<div class="preco">R$ ${p.preco}</div>
+<div class="preco">R$ ${p["preço"]}</div>
 <a class="btn" href="https://wa.me/554799216167?text=${msg}" target="_blank">Comprar</a>
 </div>
 `;
@@ -255,11 +321,7 @@ div.innerHTML=`
 container.appendChild(div);
 });
 
-})
-.catch(err => {
-console.error(err);
-container.innerHTML = "<p style='padding:20px'>Erro ao carregar produtos.</p>";
-});
+}
 
 </script>
 
