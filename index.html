@@ -65,6 +65,35 @@ opacity:.5
 
 .dot.active{opacity:1}
 
+/* CATEGORIAS */
+.categorias{
+display:flex;
+justify-content:center;
+gap:10px;
+flex-wrap:wrap;
+margin:15px 0;
+}
+
+.cat-btn{
+padding:8px 14px;
+border:none;
+border-radius:20px;
+cursor:pointer;
+background:#fff;
+box-shadow:0 2px 8px rgba(0,0,0,0.1);
+transition:.2s;
+font-weight:500;
+}
+
+.cat-btn:hover{
+transform:scale(1.05);
+}
+
+.cat-btn.active{
+background:#b07a86;
+color:#fff;
+}
+
 /* PRODUTOS */
 .container{
 display:grid;
@@ -194,6 +223,15 @@ transform: scale(1.15) rotate(8deg);
 <div class="dots" id="dots"></div>
 </div>
 
+<!-- 🔥 CATEGORIAS -->
+<div class="categorias">
+<button class="cat-btn active" onclick="filtrar('todos', this)">Todos</button>
+<button class="cat-btn" onclick="filtrar('aneis', this)">Anéis</button>
+<button class="cat-btn" onclick="filtrar('colares', this)">Colares</button>
+<button class="cat-btn" onclick="filtrar('pulseiras', this)">Pulseiras</button>
+<button class="cat-btn" onclick="filtrar('brincos', this)">Brincos</button>
+</div>
+
 <div class="container" id="produtos"></div>
 
 <script>
@@ -225,15 +263,15 @@ update();
 
 
 /* =========================
-   PRODUTOS (GOOGLE SHEETS)
+   PRODUTOS + CATEGORIAS
    ========================= */
 
 const container = document.getElementById('produtos');
 
-fetch("https://opensheet.elk.sh/1wrHEulJvrvhqPHDxWUUh8fXgq5AKeBI7E6AKB8cBtRw/1")
-.then(res => res.json())
-.then(produtos => {
+let todosProdutos = [];
+let categoriaAtual = 'todos';
 
+function render(produtos){
 container.innerHTML = "";
 
 produtos.forEach(p => {
@@ -254,6 +292,27 @@ div.innerHTML=`
 
 container.appendChild(div);
 });
+}
+
+function filtrar(cat, el){
+categoriaAtual = cat;
+
+document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
+el.classList.add('active');
+
+if(cat === 'todos'){
+render(todosProdutos);
+}else{
+render(todosProdutos.filter(p => (p.categoria || '').toLowerCase() === cat));
+}
+}
+
+fetch("https://opensheet.elk.sh/1wrHEulJvrvhqPHDxWUUh8fXgq5AKeBI7E6AKB8cBtRw/1")
+.then(res => res.json())
+.then(produtos => {
+
+todosProdutos = produtos;
+render(produtos);
 
 })
 .catch(err => {
