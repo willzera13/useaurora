@@ -126,34 +126,12 @@ cursor:pointer;
 display:block;
 background:#25D366;
 color:#fff;
-padding:8px;
+padding:10px;
 text-align:center;
-border-radius:6px;
-margin-top:5px;
+border-radius:8px;
+margin-top:10px;
 text-decoration:none;
-transition: all 0.25s ease;
-position: relative;
-overflow: hidden;
-}
-
-.btn:hover{
-transform: translateY(-3px) scale(1.03);
-box-shadow: 0 8px 18px rgba(37, 211, 102, 0.35);
-}
-
-.btn::after{
-content:"";
-position:absolute;
-top:0;
-left:-100%;
-width:100%;
-height:100%;
-background: linear-gradient(120deg, transparent, rgba(255,255,255,0.4), transparent);
-transition: 0.5s;
-}
-
-.btn:hover::after{
-left:100%;
+font-weight:600;
 }
 
 /* FOOTER */
@@ -164,46 +142,6 @@ padding:30px;
 border-top:1px solid #eee;
 }
 
-.footer-content{
-display:flex;
-justify-content:space-between;
-align-items:center;
-max-width:1000px;
-margin:auto;
-}
-
-.footer-logo img{max-width:120px}
-.footer-text{text-align:center}
-.footer-icons img{width:28px;margin-left:10px}
-
-/* WHATS */
-.whatsapp-float{
-position:fixed;
-bottom:20px;
-right:20px;
-background:#25D366;
-width:60px;
-height:60px;
-border-radius:50%;
-display:flex;
-justify-content:center;
-align-items:center;
-transition: transform 0.3s ease;
-animation: pulseWhatsapp 2s infinite;
-}
-
-.whatsapp-float img{width:30px}
-
-.whatsapp-float:hover{
-transform: scale(1.15) rotate(8deg);
-}
-
-@keyframes pulseWhatsapp{
-0%{box-shadow:0 0 0 0 rgba(37,211,102,0.5)}
-70%{box-shadow:0 0 0 15px rgba(37,211,102,0)}
-100%{box-shadow:0 0 0 0 rgba(37,211,102,0)}
-}
-
 /* SOBRE */
 .sobre{
 background:#fff;
@@ -211,51 +149,7 @@ padding:50px 20px;
 margin-top:20px;
 }
 
-.sobre-container{
-max-width:1000px;
-margin:auto;
-display:flex;
-align-items:center;
-gap:40px;
-flex-wrap:wrap;
-}
-
-.sobre-img{
-flex:1;
-display:flex;
-justify-content:center;
-}
-
-.sobre-img img{
-width:280px;
-height:280px;
-object-fit:cover;
-border-radius:50%;
-box-shadow:0 10px 30px rgba(0,0,0,0.15);
-transition:0.3s;
-border:5px solid #f3e6ea;
-}
-
-.sobre-img img:hover{
-transform:scale(1.05);
-}
-
-.sobre-texto{
-flex:1;
-}
-
-.sobre-texto h2{
-font-size:28px;
-margin-bottom:15px;
-color:#b07a86;
-}
-
-.sobre-texto p{
-margin-bottom:10px;
-line-height:1.6;
-}
-
-/* MODAL */
+/* MODAL MELHORADO */
 .modal{
 display:none;
 position:fixed;
@@ -263,7 +157,7 @@ top:0;
 left:0;
 width:100%;
 height:100%;
-background:rgba(0,0,0,0.6);
+background:rgba(0,0,0,0.7);
 justify-content:center;
 align-items:center;
 z-index:999;
@@ -271,36 +165,58 @@ z-index:999;
 
 .modal-content{
 background:#fff;
-border-radius:12px;
-max-width:900px;
-width:90%;
-padding:20px;
+border-radius:16px;
+max-width:1000px;
+width:95%;
+padding:25px;
 position:relative;
 }
 
 .modal-body{
 display:flex;
-gap:20px;
+gap:30px;
 flex-wrap:wrap;
+align-items:center;
 }
 
 .modal-imagens{
 flex:1;
-display:flex;
-flex-direction:column;
-gap:10px;
+position:relative;
 }
 
 .modal-imagens img{
 width:100%;
-border-radius:10px;
-height:200px;
+border-radius:12px;
+height:350px;
 object-fit:cover;
 }
 
 .modal-info{
 flex:1;
 }
+
+.modal-info h2{
+margin-bottom:10px;
+}
+
+.modal-info p{
+margin-bottom:10px;
+line-height:1.5;
+}
+
+.modal-nav{
+position:absolute;
+top:50%;
+transform:translateY(-50%);
+background:rgba(0,0,0,0.5);
+color:#fff;
+border:none;
+padding:10px;
+cursor:pointer;
+}
+
+.modal-prev{left:10px}
+.modal-next{right:10px}
 
 .fechar{
 position:absolute;
@@ -315,90 +231,40 @@ cursor:pointer;
 <body>
 
 <header>
-<img src="imagens/logo.png" alt="Logo Use Aurora">
+<img src="imagens/logo.png">
 </header>
 
-<div class="carousel">
-<div class="slides" id="slides">
-<div class="slide"><img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9"></div>
-<div class="slide"><img src="https://images.unsplash.com/photo-1512496015851-a90fb38ba796"></div>
-<div class="slide"><img src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad"></div>
-</div>
-
-<button class="nav prev" onclick="moveSlide(-1)">❮</button>
-<button class="nav next" onclick="moveSlide(1)">❯</button>
-<div class="dots" id="dots"></div>
-</div>
-
-<div class="categorias">
-<button class="cat-btn active" onclick="filtrar('todos', this)">Todos</button>
-<button class="cat-btn" onclick="filtrar('aneis', this)">Anéis</button>
-<button class="cat-btn" onclick="filtrar('colares', this)">Colares</button>
-<button class="cat-btn" onclick="filtrar('pulseiras', this)">Pulseiras</button>
-<button class="cat-btn" onclick="filtrar('brincos', this)">Brincos</button>
-</div>
-
 <div class="container" id="produtos"></div>
-
-<!-- SOBRE -->
-<section class="sobre">
-<div class="sobre-container">
-<div class="sobre-img">
-<img src="imagens/gabriela.jpg">
-</div>
-<div class="sobre-texto">
-<h2>Sobre mim</h2>
-<p>Oi, eu sou a <strong>Gabriela</strong>, tenho 20 anos...</p>
-</div>
-</div>
-</section>
 
 <!-- MODAL -->
 <div id="modalProduto" class="modal">
 <div class="modal-content">
 <span class="fechar" onclick="fecharModal()">×</span>
+
 <div class="modal-body">
+
 <div class="modal-imagens">
-<img id="img1">
-<img id="img2">
+<button class="modal-nav modal-prev" onclick="trocarImg(-1)">❮</button>
+<img id="imgModal">
+<button class="modal-nav modal-next" onclick="trocarImg(1)">❯</button>
 </div>
+
 <div class="modal-info">
 <h2 id="tituloProduto"></h2>
 <p id="precoProduto"></p>
+<p id="descProduto">Semijoia de alta qualidade, elegante e perfeita para qualquer ocasião.</p>
 <a id="btnComprarModal" class="btn" target="_blank">Comprar</a>
 </div>
+
 </div>
 </div>
 </div>
 
 <script>
-let index=0;
-const slides=document.getElementById('slides');
-const total=slides.children.length;
-const dots=document.getElementById('dots');
-
-for(let i=0;i<total;i++){
-const d=document.createElement('span');
-d.className='dot';
-dots.appendChild(d);
-}
-
-function update(){
-slides.style.transform=`translateX(-${index*100}%)`;
-[...dots.children].forEach((d,i)=>d.classList.toggle('active',i===index));
-}
-
-function moveSlide(dir){
-index=(index+dir+total)%total;
-update();
-}
-
-setInterval(()=>moveSlide(1),4000);
-update();
-
 const container = document.getElementById('produtos');
 
-let todosProdutos = [];
+let imagens = [];
+let indexImg = 0;
 
 function render(produtos){
 container.innerHTML = "";
@@ -425,11 +291,19 @@ container.appendChild(div);
 
 function abrirModal(nome, preco, imagem){
 document.getElementById('modalProduto').style.display = 'flex';
+
+imagens = [imagem, imagem]; // duplicado pra simular 2 fotos
+indexImg = 0;
+
+document.getElementById('imgModal').src = imagens[indexImg];
 document.getElementById('tituloProduto').innerText = nome;
 document.getElementById('precoProduto').innerText = "R$ " + preco;
-document.getElementById('img1').src = imagem;
-document.getElementById('img2').src = imagem;
 document.getElementById('btnComprarModal').href = "https://wa.me/554799216167?text=" + encodeURIComponent("Quero " + nome);
+}
+
+function trocarImg(dir){
+indexImg = (indexImg + dir + imagens.length) % imagens.length;
+document.getElementById('imgModal').src = imagens[indexImg];
 }
 
 function fecharModal(){
@@ -438,10 +312,7 @@ document.getElementById('modalProduto').style.display = 'none';
 
 fetch("https://opensheet.elk.sh/1wrHEulJvrvhqPHDxWUUh8fXgq5AKeBI7E6AKB8cBtRw/1")
 .then(res => res.json())
-.then(produtos => {
-todosProdutos = produtos;
-render(produtos);
-});
+.then(produtos => render(produtos));
 </script>
 
 </body>
