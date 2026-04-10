@@ -255,7 +255,7 @@ margin-bottom:10px;
 line-height:1.6;
 }
 
-/* 🔥 MODAL MELHORADO */
+/* MODAL */
 .modal{
 display:none;
 position:fixed;
@@ -301,9 +301,6 @@ object-fit:cover;
 flex:1;
 }
 
-.modal-info h2{margin-bottom:10px}
-.modal-info p{margin-bottom:10px}
-
 .modal-nav{
 position:absolute;
 top:50%;
@@ -344,7 +341,6 @@ cursor:pointer;
 
 <div class="container" id="produtos"></div>
 
-<!-- SOBRE -->
 <section class="sobre">
 <div class="sobre-container">
 <div class="sobre-img">
@@ -360,11 +356,9 @@ cursor:pointer;
 <!-- MODAL -->
 <div id="modalProduto" class="modal">
 <div class="modal-content">
-
 <span class="fechar" onclick="fecharModal()">×</span>
 
 <div class="modal-body">
-
 <div class="modal-imagens">
 <button class="modal-nav modal-prev" onclick="trocarImg(-1)">❮</button>
 <img id="imgModal">
@@ -377,13 +371,11 @@ cursor:pointer;
 <p>Semijoia elegante e de alta qualidade ✨</p>
 <a id="btnComprarModal" class="btn" target="_blank">Comprar</a>
 </div>
-
 </div>
 </div>
 </div>
 
 <script>
-
 const container = document.getElementById('produtos');
 
 let todosProdutos = [];
@@ -453,8 +445,37 @@ fetch("https://opensheet.elk.sh/1wrHEulJvrvhqPHDxWUUh8fXgq5AKeBI7E6AKB8cBtRw/1")
 todosProdutos = produtos;
 render(produtos);
 });
-
 </script>
+
+<!-- 🔥 RODAPÉ ADICIONADO -->
+<footer>
+<div class="footer-content">
+
+<div class="footer-logo">
+<img src="imagens/logo.png">
+</div>
+
+<div class="footer-text">
+<h3>Use Aurora</h3>
+<p>Semijoias que valorizam sua beleza</p>
+</div>
+
+<div class="footer-icons">
+<a href="https://www.instagram.com/use.aaurora" target="_blank">
+<img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png">
+</a>
+
+<a href="https://wa.me/554799216167" target="_blank">
+<img src="https://cdn-icons-png.flaticon.com/512/733/733585.png">
+</a>
+</div>
+
+</div>
+</footer>
+
+<a class="whatsapp-float" href="https://wa.me/554799216167">
+<img src="https://cdn-icons-png.flaticon.com/512/733/733585.png">
+</a>
 
 </body>
 </html>
