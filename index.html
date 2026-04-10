@@ -320,7 +320,7 @@ align-items:center;
 
 <div class="container" id="produtos"></div>
 
-<!-- 🔥 SOBRE (ADICIONADO) -->
+<!-- 🔥 SOBRE -->
 <section class="sobre">
 <div class="sobre-container">
 
@@ -344,4 +344,187 @@ align-items:center;
 </div>
 </section>
 
-<!-- TODO O RESTO DO SEU CÓDIGO PERMANECE IGUAL (modal, zoom, script, footer...) -->
+<!-- MODAL -->
+<div class="modal" id="modal">
+<div class="modal-content">
+<span class="fechar" onclick="fecharModal()">×</span>
+<div class="modal-body">
+<div class="modal-imagens">
+<img id="modal-img" src="" onclick="abrirZoom(this.src)">
+<button class="modal-nav modal-prev" onclick="trocarImg(-1)">‹</button>
+<button class="modal-nav modal-next" onclick="trocarImg(1)">›</button>
+</div>
+<div class="modal-info">
+<h2 id="modal-nome"></h2>
+<p id="modal-preco" style="color:#b07a86;font-size:20px;font-weight:bold;margin:10px 0"></p>
+<a id="modal-btn" href="#" target="_blank" class="btn">💬 Quero esse produto</a>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ZOOM -->
+<div class="zoom-img" id="zoom">
+<span class="fechar-zoom" onclick="fecharZoom()">×</span>
+<img id="zoom-img-el" src="">
+</div>
+
+<!-- WHATSAPP FLUTUANTE -->
+<a class="whatsapp-float" href="https://wa.me/5500000000000" target="_blank">
+<img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
+</a>
+
+<footer>
+<div class="footer-content">
+<div class="footer-logo"><img src="imagens/logo.png"></div>
+<div class="footer-text">
+<p>© 2025 Use Aurora. Todos os direitos reservados.</p>
+</div>
+</div>
+<div class="footer-credit">Desenvolvido com ❤️</div>
+</footer>
+
+<script>
+// ✅ CORREÇÃO: Converte links do Google Drive para o formato thumbnail que funciona
+function converterLinkDrive(url) {
+  if (!url) return url;
+
+  // Formato: /uc?export=view&id=ID
+  const match1 = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+  if (match1) {
+    return `https://drive.google.com/thumbnail?id=${match1[1]}&sz=w800`;
+  }
+
+  // Formato: /file/d/ID/view
+  const match2 = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+  if (match2) {
+    return `https://drive.google.com/thumbnail?id=${match2[1]}&sz=w800`;
+  }
+
+  return url;
+}
+
+const whatsapp = "5500000000000"; // ← Coloque o número da Gabriela aqui
+
+const produtos = [
+  {
+    nome: "Bracelete Pérola",
+    preco: 168.00,
+    categoria: "pulseiras",
+    imagem: converterLinkDrive("https://drive.google.com/uc?export=view&id=1hP_gyQ8xyDbutJ2vxc8BPxGLD_oKEeOA"),
+    imagens: [
+      "https://images.unsplash.com/photo-1617038220319-276d3cfab638",
+      "https://images.unsplash.com/photo-1608042314453-ae338d80c427"
+    ]
+  },
+  {
+    nome: "Bracelete Moderno",
+    preco: 148.00,
+    categoria: "pulseiras",
+    imagem: converterLinkDrive("https://drive.google.com/file/d/164VTYlV_Twv8q3cYlBv84dtW2DELzzF9/view?usp=drive_link"),
+    imagens: [
+      "https://images.unsplash.com/photo-1608042314453-ae338d80c427",
+      "https://images.unsplash.com/photo-1617038220319-276d3cfab638"
+    ]
+  },
+  {
+    nome: "Anel Elegante",
+    preco: 59.90,
+    categoria: "aneis",
+    imagem: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f",
+    imagens: [
+      "https://images.unsplash.com/photo-1617038220319-276d3cfab638",
+      "https://images.unsplash.com/photo-1608042314453-ae338d80c427"
+    ]
+  },
+  {
+    nome: "Anel Elegante",
+    preco: 59.91,
+    categoria: "aneis",
+    imagem: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f",
+    imagens: [
+      "https://images.unsplash.com/photo-1617038220319-276d3cfab638",
+      "https://images.unsplash.com/photo-1608042314453-ae338d80c427"
+    ]
+  },
+  {
+    nome: "Puseira Elegante",
+    preco: 120.99,
+    categoria: "pulseiras",
+    imagem: "https://images.unsplash.com/photo-1611652022419-a9419f74343d",
+    imagens: [
+      "https://images.unsplash.com/photo-1608042314453-ae338d80c427",
+      "https://images.unsplash.com/photo-1617038220319-276d3cfab638"
+    ]
+  }
+];
+
+let produtoAtual = null;
+let imgAtual = 0;
+
+function renderizar(lista) {
+  const container = document.getElementById('produtos');
+  container.innerHTML = '';
+  lista.forEach(p => {
+    const div = document.createElement('div');
+    div.className = 'produto';
+    div.innerHTML = `
+      <img src="${p.imagem}" onerror="this.src='https://via.placeholder.com/400x200?text=Imagem+indisponível'" onclick="abrirModal(${produtos.indexOf(p)})">
+      <div class="info">
+        <p class="nome">${p.nome}</p>
+        <p class="preco">R$ ${p.preco.toFixed(2)}</p>
+        <a class="btn" href="https://wa.me/${whatsapp}?text=Olá! Tenho interesse no produto: ${encodeURIComponent(p.nome)} - R$ ${p.preco.toFixed(2)}" target="_blank">💬 Quero esse produto</a>
+      </div>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function filtrar(cat, btn) {
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderizar(produtos.filter(p => p.categoria === cat));
+}
+
+function abrirModal(i) {
+  produtoAtual = i;
+  imgAtual = 0;
+  const p = produtos[i];
+  document.getElementById('modal-nome').textContent = p.nome;
+  document.getElementById('modal-preco').textContent = `R$ ${p.preco.toFixed(2)}`;
+  document.getElementById('modal-img').src = p.imagem;
+  document.getElementById('modal-btn').href = `https://wa.me/${whatsapp}?text=Olá! Tenho interesse no produto: ${encodeURIComponent(p.nome)} - R$ ${p.preco.toFixed(2)}`;
+  document.getElementById('modal').style.display = 'flex';
+}
+
+function fecharModal() {
+  document.getElementById('modal').style.display = 'none';
+}
+
+function trocarImg(dir) {
+  const p = produtos[produtoAtual];
+  const todas = [p.imagem, ...p.imagens];
+  imgAtual = (imgAtual + dir + todas.length) % todas.length;
+  document.getElementById('modal-img').src = todas[imgAtual];
+}
+
+function abrirZoom(src) {
+  document.getElementById('zoom-img-el').src = src;
+  document.getElementById('zoom').style.display = 'flex';
+}
+
+function fecharZoom() {
+  document.getElementById('zoom').style.display = 'none';
+}
+
+window.onclick = function(e) {
+  if (e.target === document.getElementById('modal')) fecharModal();
+  if (e.target === document.getElementById('zoom')) fecharZoom();
+}
+
+// Inicializa mostrando anéis
+renderizar(produtos.filter(p => p.categoria === 'aneis'));
+</script>
+
+</body>
+</html>
