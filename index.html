@@ -184,6 +184,47 @@ right:20px;
 font-size:30px;
 cursor:pointer;
 }
+
+/* 🔥 FOOTER */
+footer{
+background:#fff;
+margin-top:30px;
+padding:30px;
+border-top:1px solid #eee;
+}
+
+.footer-content{
+display:flex;
+justify-content:space-between;
+align-items:center;
+max-width:1000px;
+margin:auto;
+}
+
+.footer-logo img{max-width:120px}
+.footer-text{text-align:center}
+.footer-icons img{width:28px;margin-left:10px}
+
+/* 🔥 WHATSAPP FLOAT */
+.whatsapp-float{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#25D366;
+width:60px;
+height:60px;
+border-radius:50%;
+display:flex;
+justify-content:center;
+align-items:center;
+transition: transform 0.3s ease;
+}
+
+.whatsapp-float img{width:30px}
+
+.whatsapp-float:hover{
+transform: scale(1.15);
+}
 </style>
 </head>
 
@@ -291,6 +332,36 @@ todosProdutos = produtos;
 render(produtos.filter(p => (p.categoria || '').toLowerCase() === 'aneis'));
 });
 </script>
+
+<!-- 🔥 RODAPÉ -->
+<footer>
+<div class="footer-content">
+
+<div class="footer-logo">
+<img src="imagens/logo.png">
+</div>
+
+<div class="footer-text">
+<h3>Use Aurora</h3>
+<p>Semijoias que valorizam sua beleza</p>
+</div>
+
+<div class="footer-icons">
+<a href="https://www.instagram.com/use.aaurora" target="_blank">
+<img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png">
+</a>
+
+<a href="https://wa.me/554799216167" target="_blank">
+<img src="https://cdn-icons-png.flaticon.com/512/733/733585.png">
+</a>
+</div>
+
+</div>
+</footer>
+
+<a class="whatsapp-float" href="https://wa.me/554799216167">
+<img src="https://cdn-icons-png.flaticon.com/512/733/733585.png">
+</a>
 
 </body>
 </html>
