@@ -46,8 +46,14 @@ transition:.2s;
 font-weight:500;
 }
 
-.cat-btn:hover{transform:scale(1.05);}
-.cat-btn.active{background:#b07a86;color:#fff}
+.cat-btn:hover{
+transform:scale(1.05);
+}
+
+.cat-btn.active{
+background:#b07a86;
+color:#fff;
+}
 
 /* PRODUTOS */
 .container{
@@ -72,6 +78,7 @@ cursor:pointer;
 }
 
 .info{padding:10px}
+
 .nome{font-weight:600}
 .preco{color:#b07a86;font-weight:bold}
 
@@ -85,15 +92,39 @@ text-align:center;
 border-radius:6px;
 margin-top:5px;
 text-decoration:none;
-transition:.25s;
+transition: all 0.25s ease;
+position: relative;
+overflow: hidden;
 }
-.btn:hover{transform:translateY(-3px);box-shadow:0 8px 18px rgba(37,211,102,0.35)}
+
+.btn:hover{
+transform: translateY(-3px) scale(1.03);
+box-shadow: 0 8px 18px rgba(37, 211, 102, 0.35);
+}
+
+.btn::after{
+content:"";
+position:absolute;
+top:0;
+left:-100%;
+width:100%;
+height:100%;
+background: linear-gradient(120deg, transparent, rgba(255,255,255,0.4), transparent);
+transition: 0.5s;
+}
+
+.btn:hover::after{
+left:100%;
+}
 
 /* MODAL */
 .modal{
 display:none;
 position:fixed;
-top:0;left:0;width:100%;height:100%;
+top:0;
+left:0;
+width:100%;
+height:100%;
 background:rgba(0,0,0,0.7);
 justify-content:center;
 align-items:center;
@@ -109,26 +140,41 @@ padding:25px;
 position:relative;
 }
 
-.modal-body{display:flex;gap:30px;flex-wrap:wrap;align-items:center}
-.modal-imagens{flex:1;position:relative}
+.modal-body{
+display:flex;
+gap:30px;
+flex-wrap:wrap;
+align-items:center;
+}
+
+.modal-imagens{
+flex:1;
+position:relative;
+}
 
 .modal-imagens img{
 width:100%;
+border-radius:12px;
 height:350px;
 object-fit:cover;
-border-radius:12px;
 cursor:zoom-in;
 }
 
-.modal-info{flex:1}
+.modal-info{
+flex:1;
+}
 
 .modal-nav{
 position:absolute;
 top:50%;
 transform:translateY(-50%);
 background:rgba(0,0,0,0.5);
-color:#fff;border:none;padding:10px;cursor:pointer;
+color:#fff;
+border:none;
+padding:10px;
+cursor:pointer;
 }
+
 .modal-prev{left:10px}
 .modal-next{right:10px}
 
@@ -140,15 +186,19 @@ font-size:30px;
 cursor:pointer;
 }
 
-/* ZOOM */
+/* 🔥 ZOOM */
 .zoom-img{
 display:none;
 position:fixed;
-top:0;left:0;width:100%;height:100%;
+top:0;
+left:0;
+width:100%;
+height:100%;
 background:rgba(0,0,0,0.95);
 justify-content:center;
 align-items:center;
 z-index:1000;
+touch-action:none;
 }
 
 .zoom-img img{
@@ -166,7 +216,7 @@ color:#fff;
 cursor:pointer;
 }
 
-/* 🔥 SOBRE (ADICIONADO SEM QUEBRAR NADA) */
+/* 🔥 SOBRE */
 .sobre{
 background:#fff;
 padding:50px 20px;
@@ -197,9 +247,20 @@ box-shadow:0 10px 30px rgba(0,0,0,0.15);
 border:5px solid #f3e6ea;
 }
 
-.sobre-texto{flex:1;}
-.sobre-texto h2{color:#b07a86;margin-bottom:10px}
-.sobre-texto p{margin-bottom:10px}
+.sobre-texto{
+flex:1;
+}
+
+.sobre-texto h2{
+font-size:28px;
+margin-bottom:15px;
+color:#b07a86;
+}
+
+.sobre-texto p{
+margin-bottom:10px;
+line-height:1.6;
+}
 
 /* FOOTER */
 footer{
@@ -233,13 +294,30 @@ position:fixed;
 bottom:20px;
 right:20px;
 background:#25D366;
-width:60px;height:60px;
+width:60px;
+height:60px;
 border-radius:50%;
 display:flex;
 justify-content:center;
 align-items:center;
 }
 .whatsapp-float img{width:30px}
+
+/* SEM PRODUTOS */
+.sem-produtos{
+display:none;
+grid-column: 1 / -1;
+text-align:center;
+padding:60px 20px;
+color:#aaa;
+font-size:16px;
+}
+
+.sem-produtos span{
+font-size:48px;
+display:block;
+margin-bottom:10px;
+}
 </style>
 </head>
 
@@ -256,61 +334,68 @@ align-items:center;
 <button class="cat-btn" onclick="filtrar('brincos', this)">Brincos</button>
 </div>
 
-<div class="container" id="produtos"></div>
+<div class="container" id="produtos">
+  <div class="sem-produtos" id="sem-produtos">
+    <span>🛍️</span>
+    Sem produtos disponíveis nessa categoria no momento.
+  </div>
+</div>
 
-<!-- 🔥 SOBRE (AGORA FUNCIONANDO) -->
+<!-- 🔥 SOBRE -->
 <section class="sobre">
 <div class="sobre-container">
+
 <div class="sobre-img">
 <img src="imagens/gabriela.jpg">
 </div>
 
 <div class="sobre-texto">
 <h2>Sobre mim</h2>
-<p>Oi, eu sou a <strong>Gabriela</strong>, tenho 20 anos...</p>
-<p>Criei a Use Aurora para conquistar minha independência...</p>
-<p>Trabalho com semijoias de qualidade...</p>
-<p>Meu objetivo é fazer você se sentir mais confiante ✨</p>
+
+<p>Oi, eu sou a <strong>Gabriela</strong>, tenho 20 anos e sou apaixonada por acessórios que valorizam a beleza de cada mulher.</p>
+
+<p>Criei a Use Aurora com o objetivo de conquistar minha independência financeira e transformar algo que amo em um negócio real.</p>
+
+<p>Trabalho com semijoias selecionadas, priorizando qualidade, acabamento e durabilidade em cada peça.</p>
+
+<p>Mais do que vender acessórios, quero proporcionar confiança, elegância e um toque especial no seu dia a dia ✨</p>
+
 </div>
+
 </div>
 </section>
 
-<!-- TODO SEU JS ORIGINAL (NÃO ALTERADO) -->
-<script>
-const container = document.getElementById('produtos');
-let todosProdutos = [];
+<!-- MODAL -->
+<div class="modal" id="modal">
+<div class="modal-content">
+<span class="fechar" onclick="fecharModal()">×</span>
+<div class="modal-body">
+<div class="modal-imagens">
+<img id="modal-img" src="" onclick="abrirZoom(this.src)">
+<button class="modal-nav modal-prev" onclick="trocarImg(-1)">‹</button>
+<button class="modal-nav modal-next" onclick="trocarImg(1)">›</button>
+</div>
+<div class="modal-info">
+<h2 id="modal-nome"></h2>
+<p id="modal-preco" style="color:#b07a86;font-size:20px;font-weight:bold;margin:10px 0"></p>
+<a id="modal-btn" href="#" target="_blank" class="btn">💬 Quero esse produto</a>
+</div>
+</div>
+</div>
+</div>
 
-function render(produtos){
-container.innerHTML="";
-produtos.forEach(p=>{
-const div=document.createElement('div');
-div.className='produto';
-div.innerHTML=`
-<img src="${p.imagem}" onclick="abrirModal('${p.nome}','${p.preco}','${p.imagens || p.imagem}')">
-<div class="info">
-<div class="nome">${p.nome}</div>
-<div class="preco">R$ ${p.preco}</div>
-<a class="btn" href="https://wa.me/554799216167">Comprar</a>
-</div>`;
-container.appendChild(div);
-});
-}
+<!-- ZOOM -->
+<div class="zoom-img" id="zoom">
+<span class="fechar-zoom" onclick="fecharZoom()">×</span>
+<img id="zoom-img-el" src="">
+</div>
 
-function filtrar(cat,el){
-document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
-el.classList.add('active');
-render(todosProdutos.filter(p=>p.categoria.toLowerCase()===cat));
-}
+<!-- WHATSAPP FLUTUANTE -->
+<a class="whatsapp-float" href="https://wa.me/554799216167" target="_blank">
+<img src="https://cdn-icons-png.flaticon.com/512/733/733585.png">
+</a>
 
-fetch("https://opensheet.elk.sh/1wrHEulJvrvhqPHDxWUUh8fXgq5AKeBI7E6AKB8cBtRw/1")
-.then(r=>r.json())
-.then(p=>{
-todosProdutos=p;
-render(p.filter(p=>p.categoria.toLowerCase()==='aneis'));
-});
-</script>
-
-<!-- FOOTER ORIGINAL -->
+<!-- FOOTER -->
 <footer>
 <div class="footer-content">
 
@@ -342,12 +427,103 @@ render(p.filter(p=>p.categoria.toLowerCase()==='aneis'));
 <div class="footer-credit">
 <p>Desenvolvido por <strong>Willian Squena</strong></p>
 </div>
-
 </footer>
 
-<a class="whatsapp-float" href="https://wa.me/554799216167">
-<img src="https://cdn-icons-png.flaticon.com/512/733/733585.png">
-</a>
+<script>
+function converterLinkDrive(url) {
+  if (!url) return url;
+  const match1 = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+  if (match1) return `https://drive.google.com/thumbnail?id=${match1[1]}&sz=w800`;
+  const match2 = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+  if (match2) return `https://drive.google.com/thumbnail?id=${match2[1]}&sz=w800`;
+  return url;
+}
+
+const whatsapp = "554799216167";
+const container = document.getElementById('produtos');
+const semProdutos = document.getElementById('sem-produtos');
+let todosProdutos = [];
+let produtoAtual = null;
+let imgAtual = 0;
+
+function render(lista) {
+  container.innerHTML = '';
+  container.appendChild(semProdutos);
+
+  if (lista.length === 0) {
+    semProdutos.style.display = 'block';
+    return;
+  }
+
+  semProdutos.style.display = 'none';
+
+  lista.forEach((p, i) => {
+    const imagem = converterLinkDrive(p.imagem);
+    const div = document.createElement('div');
+    div.className = 'produto';
+    div.innerHTML = `
+      <img src="${imagem}" onerror="this.src='https://via.placeholder.com/400x200?text=Imagem+indisponível'" onclick="abrirModal(${todosProdutos.indexOf(p)})">
+      <div class="info">
+        <div class="nome">${p.nome}</div>
+        <div class="preco">R$ ${p.preco}</div>
+        <a class="btn" href="https://wa.me/${whatsapp}?text=Olá! Tenho interesse no produto: ${encodeURIComponent(p.nome)} - R$ ${p.preco}" target="_blank">💬 Quero esse produto</a>
+      </div>`;
+    container.appendChild(div);
+  });
+}
+
+function filtrar(cat, btn) {
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  render(todosProdutos.filter(p => p.categoria.toLowerCase() === cat));
+}
+
+function abrirModal(i) {
+  produtoAtual = i;
+  imgAtual = 0;
+  const p = todosProdutos[i];
+  const imagens = p.imagens ? p.imagens.split(',').map(s => converterLinkDrive(s.trim())) : [];
+  const imgPrincipal = converterLinkDrive(p.imagem);
+  document.getElementById('modal-nome').textContent = p.nome;
+  document.getElementById('modal-preco').textContent = `R$ ${p.preco}`;
+  document.getElementById('modal-img').src = imgPrincipal;
+  document.getElementById('modal-btn').href = `https://wa.me/${whatsapp}?text=Olá! Tenho interesse no produto: ${encodeURIComponent(p.nome)} - R$ ${p.preco}`;
+  document.getElementById('modal').style.display = 'flex';
+}
+
+function fecharModal() {
+  document.getElementById('modal').style.display = 'none';
+}
+
+function trocarImg(dir) {
+  const p = todosProdutos[produtoAtual];
+  const imagens = p.imagens ? p.imagens.split(',').map(s => converterLinkDrive(s.trim())) : [];
+  const todas = [converterLinkDrive(p.imagem), ...imagens];
+  imgAtual = (imgAtual + dir + todas.length) % todas.length;
+  document.getElementById('modal-img').src = todas[imgAtual];
+}
+
+function abrirZoom(src) {
+  document.getElementById('zoom-img-el').src = src;
+  document.getElementById('zoom').style.display = 'flex';
+}
+
+function fecharZoom() {
+  document.getElementById('zoom').style.display = 'none';
+}
+
+window.onclick = function(e) {
+  if (e.target === document.getElementById('modal')) fecharModal();
+  if (e.target === document.getElementById('zoom')) fecharZoom();
+}
+
+fetch("https://opensheet.elk.sh/1wrHEulJvrvhqPHDxWUUh8fXgq5AKeBI7E6AKB8cBtRw/1")
+  .then(r => r.json())
+  .then(p => {
+    todosProdutos = p;
+    render(p.filter(p => p.categoria.toLowerCase() === 'aneis'));
+  });
+</script>
 
 </body>
 </html>
