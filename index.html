@@ -118,22 +118,11 @@ gap:40px;
 flex-wrap:wrap;
 }
 
-.sobre-img{
-flex:1;
-display:flex;
-justify-content:center;
-}
-
 .sobre-img img{
 width:280px;
 height:280px;
 object-fit:cover;
 border-radius:50%;
-box-shadow:0 10px 30px rgba(0,0,0,0.15);
-}
-
-.sobre-texto{
-flex:1;
 }
 
 /* MODAL */
@@ -203,26 +192,6 @@ right:20px;
 font-size:30px;
 cursor:pointer;
 }
-
-/* FOOTER */
-footer{
-background:#fff;
-margin-top:30px;
-padding:30px;
-border-top:1px solid #eee;
-}
-
-.footer-content{
-display:flex;
-justify-content:space-between;
-align-items:center;
-max-width:1000px;
-margin:auto;
-}
-
-.footer-logo img{max-width:120px}
-.footer-text{text-align:center}
-.footer-icons img{width:28px;margin-left:10px}
 </style>
 </head>
 
@@ -249,9 +218,10 @@ margin:auto;
 </div>
 <div class="sobre-texto">
 <h2>Sobre mim</h2>
-<p>Oi, eu sou a <strong>Gabriela</strong>, tenho 20 anos e sou apaixonada por acessórios que valorizam a beleza de cada mulher.</p>
-<p>Comecei a Use Aurora com o objetivo de conquistar minha independência financeira e transformar algo que amo em um negócio de verdade.</p>
-<p>Cada peça é escolhida com carinho para fazer você se sentir ainda mais confiante ✨</p>
+<p>Oi, eu sou a <strong>Gabriela</strong>, tenho 20 anos e sou apaixonada por acessórios que valorizam a beleza de cada mulher.</p> 
+<p>Comecei a Use Aurora com o objetivo de conquistar minha independência financeira e transformar algo que amo em um negócio de verdade.</p> 
+<p>Mais do que vender semijoias, eu quero ajudar você a se sentir mais confiante, elegante e especial em qualquer ocasião ✨</p> 
+<p>Cada peça aqui é escolhida com muito carinho, pensando em qualidade, estilo e naquele toque único que faz toda a diferença no seu visual 💖</p>
 </div>
 </div>
 </section>
@@ -296,7 +266,7 @@ const div = document.createElement('div');
 div.className='produto';
 
 div.innerHTML=`
-<img src="${p.imagem}" onclick="abrirModal('${p.nome}','${p.preco}','${p.imagem}','${p.imagem2 || ''}')">
+<img src="${p.imagem}" onclick="abrirModal('${p.nome}','${p.preco}','${p.imagem}','${p.imagem2}')">
 <div class="info">
 <div class="nome">${p.nome}</div>
 <div class="preco">R$ ${p.preco}</div>
@@ -319,14 +289,13 @@ render(todosProdutos.filter(p => (p.categoria || '').toLowerCase() === cat));
 }
 }
 
-function abrirModal(nome, preco, img1, img2){
+function abrirModal(nome, preco, imagem, imagem2){
 document.getElementById('modalProduto').style.display = 'flex';
 
-// 🔥 PRO – múltiplas imagens
-imagensModal = img2 ? [img1, img2] : [img1];
+imagensModal = [imagem, imagem2 || imagem];
 indexImg = 0;
 
-document.getElementById('imgModal').src = imagensModal[0];
+document.getElementById('imgModal').src = imagensModal[indexImg];
 document.getElementById('tituloProduto').innerText = nome;
 document.getElementById('precoProduto').innerText = "R$ " + preco;
 
@@ -351,6 +320,7 @@ render(produtos);
 });
 </script>
 
+<!-- RODAPÉ -->
 <footer>
 <div class="footer-content">
 
