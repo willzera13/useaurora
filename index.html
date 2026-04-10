@@ -205,6 +205,14 @@ margin:auto;
 .footer-text{text-align:center}
 .footer-icons img{width:28px;margin-left:10px}
 
+/* 🔥 CRÉDITO */
+.footer-credit{
+text-align:center;
+margin-top:15px;
+font-size:14px;
+color:#777;
+}
+
 /* 🔥 WHATSAPP FLOAT */
 .whatsapp-float{
 position:fixed;
@@ -258,10 +266,7 @@ transform: scale(1.15);
 <div class="modal-info">
 <h2 id="tituloProduto"></h2>
 <p id="precoProduto"></p>
-<p>Todas as peças são semijoias selecionadas, com banho de alta qualidade e excelente padrão de acabamento.
-Desenvolvidas para oferecer beleza, durabilidade e conforto, mantendo brilho e cor por longos períodos quando bem cuidadas.
-Nossas peças são livres de níquel, reduzindo riscos de alergia.
-Para maior vida útil, recomenda-se evitar contato com água, suor excessivo, perfumes e produtos químicos.</p>
+<p>Semijoia elegante e de alta qualidade ✨</p>
 <a id="btnComprarModal" class="btn" target="_blank">Comprar</a>
 </div>
 </div>
@@ -350,6 +355,10 @@ render(produtos.filter(p => (p.categoria || '').toLowerCase() === 'aneis'));
 </div>
 
 <div class="footer-icons">
+<a href="mailto:Andrade06gabriela@gmail.com">
+<img src="https://cdn-icons-png.flaticon.com/512/732/732200.png">
+</a>
+
 <a href="https://www.instagram.com/use.aaurora" target="_blank">
 <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png">
 </a>
@@ -360,6 +369,11 @@ render(produtos.filter(p => (p.categoria || '').toLowerCase() === 'aneis'));
 </div>
 
 </div>
+
+<div class="footer-credit">
+<p>Desenvolvido por <strong>Willian Squena</strong></p>
+</div>
+
 </footer>
 
 <a class="whatsapp-float" href="https://wa.me/554799216167">
