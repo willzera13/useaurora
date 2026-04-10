@@ -8,9 +8,254 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
-/* (SEU CSS TODO MANTIDO IGUAL ATÉ O FINAL...) */
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
 
-/* ADICIONADO - MODAL MELHORADO */
+body{
+background:linear-gradient(180deg,#f8f5f2 0%, #efe7eb 100%);
+color:#333
+}
+
+header{
+background:#fff;
+padding:10px;
+display:flex;
+justify-content:center;
+align-items:center;
+box-shadow:0 2px 10px rgba(0,0,0,0.05)
+}
+
+header img{max-width:300px}
+
+/* CARROSSEL */
+.carousel{max-width:1100px;margin:20px auto;border-radius:12px;overflow:hidden;position:relative}
+.slides{display:flex;transition:transform .5s ease}
+.slide{min-width:100%}
+.slide img{width:100%;height:260px;object-fit:cover}
+
+.nav{
+position:absolute;
+top:50%;
+transform:translateY(-50%);
+background:rgba(0,0,0,0.4);
+color:#fff;
+border:none;
+padding:10px;
+cursor:pointer
+}
+
+.prev{left:10px}
+.next{right:10px}
+
+.dots{
+position:absolute;
+bottom:10px;
+width:100%;
+text-align:center
+}
+
+.dot{
+display:inline-block;
+width:8px;
+height:8px;
+background:#fff;
+border-radius:50%;
+margin:3px;
+opacity:.5
+}
+
+.dot.active{opacity:1}
+
+/* CATEGORIAS */
+.categorias{
+display:flex;
+justify-content:center;
+gap:10px;
+flex-wrap:wrap;
+margin:15px 0;
+}
+
+.cat-btn{
+padding:8px 14px;
+border:none;
+border-radius:20px;
+cursor:pointer;
+background:#fff;
+box-shadow:0 2px 8px rgba(0,0,0,0.1);
+transition:.2s;
+font-weight:500;
+}
+
+.cat-btn:hover{
+transform:scale(1.05);
+}
+
+.cat-btn.active{
+background:#b07a86;
+color:#fff;
+}
+
+/* PRODUTOS */
+.container{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:15px;
+padding:20px
+}
+
+.produto{
+background:#fff;
+border-radius:12px;
+overflow:hidden;
+box-shadow:0 4px 12px rgba(0,0,0,0.08)
+}
+
+.produto img{
+width:100%;
+height:200px;
+object-fit:cover;
+cursor:pointer;
+}
+
+.info{padding:10px}
+
+.nome{font-weight:600}
+.preco{color:#b07a86;font-weight:bold}
+
+/* BOTÃO */
+.btn{
+display:block;
+background:#25D366;
+color:#fff;
+padding:8px;
+text-align:center;
+border-radius:6px;
+margin-top:5px;
+text-decoration:none;
+transition: all 0.25s ease;
+position: relative;
+overflow: hidden;
+}
+
+.btn:hover{
+transform: translateY(-3px) scale(1.03);
+box-shadow: 0 8px 18px rgba(37, 211, 102, 0.35);
+}
+
+.btn::after{
+content:"";
+position:absolute;
+top:0;
+left:-100%;
+width:100%;
+height:100%;
+background: linear-gradient(120deg, transparent, rgba(255,255,255,0.4), transparent);
+transition: 0.5s;
+}
+
+.btn:hover::after{
+left:100%;
+}
+
+/* FOOTER */
+footer{
+background:#fff;
+margin-top:30px;
+padding:30px;
+border-top:1px solid #eee;
+}
+
+.footer-content{
+display:flex;
+justify-content:space-between;
+align-items:center;
+max-width:1000px;
+margin:auto;
+}
+
+.footer-logo img{max-width:120px}
+.footer-text{text-align:center}
+.footer-icons img{width:28px;margin-left:10px}
+
+/* WHATS */
+.whatsapp-float{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#25D366;
+width:60px;
+height:60px;
+border-radius:50%;
+display:flex;
+justify-content:center;
+align-items:center;
+transition: transform 0.3s ease;
+animation: pulseWhatsapp 2s infinite;
+}
+
+.whatsapp-float img{width:30px}
+
+.whatsapp-float:hover{
+transform: scale(1.15) rotate(8deg);
+}
+
+@keyframes pulseWhatsapp{
+0%{box-shadow:0 0 0 0 rgba(37,211,102,0.5)}
+70%{box-shadow:0 0 0 15px rgba(37,211,102,0)}
+100%{box-shadow:0 0 0 0 rgba(37,211,102,0)}
+}
+
+/* SOBRE */
+.sobre{
+background:#fff;
+padding:50px 20px;
+margin-top:20px;
+}
+
+.sobre-container{
+max-width:1000px;
+margin:auto;
+display:flex;
+align-items:center;
+gap:40px;
+flex-wrap:wrap;
+}
+
+.sobre-img{
+flex:1;
+display:flex;
+justify-content:center;
+}
+
+.sobre-img img{
+width:280px;
+height:280px;
+object-fit:cover;
+border-radius:50%;
+box-shadow:0 10px 30px rgba(0,0,0,0.15);
+transition:0.3s;
+border:5px solid #f3e6ea;
+}
+
+.sobre-img img:hover{
+transform:scale(1.05);
+}
+
+.sobre-texto{
+flex:1;
+}
+
+.sobre-texto h2{
+font-size:28px;
+margin-bottom:15px;
+color:#b07a86;
+}
+
+.sobre-texto p{
+margin-bottom:10px;
+line-height:1.6;
+}
+
+/* 🔥 MODAL MELHORADO */
 .modal{
 display:none;
 position:fixed;
@@ -56,6 +301,9 @@ object-fit:cover;
 flex:1;
 }
 
+.modal-info h2{margin-bottom:10px}
+.modal-info p{margin-bottom:10px}
+
 .modal-nav{
 position:absolute;
 top:50%;
@@ -82,14 +330,41 @@ cursor:pointer;
 
 <body>
 
-<!-- TODO SEU HTML ORIGINAL MANTIDO -->
+<header>
+<img src="imagens/logo.png">
+</header>
+
+<div class="categorias">
+<button class="cat-btn active" onclick="filtrar('todos', this)">Todos</button>
+<button class="cat-btn" onclick="filtrar('aneis', this)">Anéis</button>
+<button class="cat-btn" onclick="filtrar('colares', this)">Colares</button>
+<button class="cat-btn" onclick="filtrar('pulseiras', this)">Pulseiras</button>
+<button class="cat-btn" onclick="filtrar('brincos', this)">Brincos</button>
+</div>
+
+<div class="container" id="produtos"></div>
+
+<!-- SOBRE -->
+<section class="sobre">
+<div class="sobre-container">
+<div class="sobre-img">
+<img src="imagens/gabriela.jpg">
+</div>
+<div class="sobre-texto">
+<h2>Sobre mim</h2>
+<p>Oi, eu sou a <strong>Gabriela</strong>, tenho 20 anos...</p>
+</div>
+</div>
+</section>
 
 <!-- MODAL -->
 <div id="modalProduto" class="modal">
 <div class="modal-content">
+
 <span class="fechar" onclick="fecharModal()">×</span>
 
 <div class="modal-body">
+
 <div class="modal-imagens">
 <button class="modal-nav modal-prev" onclick="trocarImg(-1)">❮</button>
 <img id="imgModal">
@@ -102,19 +377,19 @@ cursor:pointer;
 <p>Semijoia elegante e de alta qualidade ✨</p>
 <a id="btnComprarModal" class="btn" target="_blank">Comprar</a>
 </div>
-</div>
 
+</div>
 </div>
 </div>
 
 <script>
 
-/* SEU SCRIPT ORIGINAL MANTIDO */
+const container = document.getElementById('produtos');
 
+let todosProdutos = [];
 let imagensModal = [];
 let indexImg = 0;
 
-/* ALTERAÇÃO SEGURA (NÃO QUEBRA FILTRO) */
 function render(produtos){
 container.innerHTML = "";
 
@@ -138,7 +413,17 @@ container.appendChild(div);
 });
 }
 
-/* NOVO - MODAL */
+function filtrar(cat, el){
+document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
+el.classList.add('active');
+
+if(cat === 'todos'){
+render(todosProdutos);
+}else{
+render(todosProdutos.filter(p => (p.categoria || '').toLowerCase() === cat));
+}
+}
+
 function abrirModal(nome, preco, imagem){
 document.getElementById('modalProduto').style.display = 'flex';
 
@@ -161,6 +446,13 @@ document.getElementById('imgModal').src = imagensModal[indexImg];
 function fecharModal(){
 document.getElementById('modalProduto').style.display = 'none';
 }
+
+fetch("https://opensheet.elk.sh/1wrHEulJvrvhqPHDxWUUh8fXgq5AKeBI7E6AKB8cBtRw/1")
+.then(res => res.json())
+.then(produtos => {
+todosProdutos = produtos;
+render(produtos);
+});
 
 </script>
 
