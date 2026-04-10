@@ -217,7 +217,7 @@ cursor:pointer;
 <div class="modal-info">
 <h2 id="tituloProduto"></h2>
 <p id="precoProduto"></p>
-<p>Semijoia elegante e de alta qualidade ✨</p>
+<p id="descricaoProduto"></p>
 <a id="btnComprarModal" class="btn" target="_blank">Comprar</a>
 </div>
 </div>
@@ -230,6 +230,12 @@ const container = document.getElementById('produtos');
 let todosProdutos = [];
 let imagensModal = [];
 let indexImg = 0;
+
+// 🔥 DESCRIÇÃO PADRÃO
+const descricaoPadrao = `Todas as peças são semijoias selecionadas, com banho de alta qualidade e excelente padrão de acabamento.
+Desenvolvidas para oferecer beleza, durabilidade e conforto, mantendo brilho e cor por longos períodos quando bem cuidadas.
+Nossas peças são livres de níquel, reduzindo riscos de alergia.
+Para maior vida útil, recomenda-se evitar contato com água, suor excessivo, perfumes e produtos químicos.`;
 
 function render(produtos){
 container.innerHTML = "";
@@ -270,6 +276,9 @@ indexImg = 0;
 document.getElementById('imgModal').src = imagensModal[0];
 document.getElementById('tituloProduto').innerText = nome;
 document.getElementById('precoProduto').innerText = "R$ " + preco;
+
+// 🔥 TEXTO ALTERADO
+document.getElementById('descricaoProduto').innerText = descricaoPadrao;
 
 document.getElementById('btnComprarModal').href =
 "https://wa.me/554799216167?text=" + encodeURIComponent("Quero " + nome);
