@@ -112,7 +112,8 @@ box-shadow:0 4px 12px rgba(0,0,0,0.08)
 .produto img{
 width:100%;
 height:200px;
-object-fit:cover
+object-fit:cover;
+cursor:pointer;
 }
 
 .info{padding:10px}
@@ -253,6 +254,61 @@ color:#b07a86;
 margin-bottom:10px;
 line-height:1.6;
 }
+
+/* MODAL */
+.modal{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.6);
+justify-content:center;
+align-items:center;
+z-index:999;
+}
+
+.modal-content{
+background:#fff;
+border-radius:12px;
+max-width:900px;
+width:90%;
+padding:20px;
+position:relative;
+}
+
+.modal-body{
+display:flex;
+gap:20px;
+flex-wrap:wrap;
+}
+
+.modal-imagens{
+flex:1;
+display:flex;
+flex-direction:column;
+gap:10px;
+}
+
+.modal-imagens img{
+width:100%;
+border-radius:10px;
+height:200px;
+object-fit:cover;
+}
+
+.modal-info{
+flex:1;
+}
+
+.fechar{
+position:absolute;
+top:10px;
+right:20px;
+font-size:30px;
+cursor:pointer;
+}
 </style>
 </head>
 
@@ -284,23 +340,36 @@ line-height:1.6;
 
 <div class="container" id="produtos"></div>
 
-<!-- SOBRE MIM -->
+<!-- SOBRE -->
 <section class="sobre">
-  <div class="sobre-container">
-
-    <div class="sobre-img">
-      <img src="imagens/gabriela.jpg">
-    </div>
-
-    <div class="sobre-texto">
-      <h2>Sobre mim</h2>
-      <p>Oi, eu sou a <strong>Gabriela</strong>, tenho 20 anos e sou apaixonada por acessórios que realçam a beleza feminina.</p>
-      <p>Comecei a Use Aurora com o sonho de ter minha própria renda e ajudar outras mulheres a se sentirem mais confiantes e estilosas no dia a dia.</p>
-      <p>Cada peça é escolhida com carinho, pensando em qualidade, elegância e aquele toque especial que faz toda a diferença ✨</p>
-    </div>
-
-  </div>
+<div class="sobre-container">
+<div class="sobre-img">
+<img src="imagens/gabriela.jpg">
+</div>
+<div class="sobre-texto">
+<h2>Sobre mim</h2>
+<p>Oi, eu sou a <strong>Gabriela</strong>, tenho 20 anos...</p>
+</div>
+</div>
 </section>
+
+<!-- MODAL -->
+<div id="modalProduto" class="modal">
+<div class="modal-content">
+<span class="fechar" onclick="fecharModal()">×</span>
+<div class="modal-body">
+<div class="modal-imagens">
+<img id="img1">
+<img id="img2">
+</div>
+<div class="modal-info">
+<h2 id="tituloProduto"></h2>
+<p id="precoProduto"></p>
+<a id="btnComprarModal" class="btn" target="_blank">Comprar</a>
+</div>
+</div>
+</div>
+</div>
 
 <script>
 let index=0;
@@ -330,7 +399,6 @@ update();
 const container = document.getElementById('produtos');
 
 let todosProdutos = [];
-let categoriaAtual = 'todos';
 
 function render(produtos){
 container.innerHTML = "";
@@ -343,7 +411,7 @@ const div = document.createElement('div');
 div.className='produto';
 
 div.innerHTML=`
-<img src="${p.imagem}">
+<img src="${p.imagem}" onclick="abrirModal('${p.nome}','${p.preco}','${p.imagem}')">
 <div class="info">
 <div class="nome">${p.nome}</div>
 <div class="preco">R$ ${p.preco}</div>
@@ -355,61 +423,26 @@ container.appendChild(div);
 });
 }
 
-function filtrar(cat, el){
-categoriaAtual = cat;
-
-document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
-el.classList.add('active');
-
-if(cat === 'todos'){
-render(todosProdutos);
-}else{
-render(todosProdutos.filter(p => (p.categoria || '').toLowerCase() === cat));
+function abrirModal(nome, preco, imagem){
+document.getElementById('modalProduto').style.display = 'flex';
+document.getElementById('tituloProduto').innerText = nome;
+document.getElementById('precoProduto').innerText = "R$ " + preco;
+document.getElementById('img1').src = imagem;
+document.getElementById('img2').src = imagem;
+document.getElementById('btnComprarModal').href = "https://wa.me/554799216167?text=" + encodeURIComponent("Quero " + nome);
 }
+
+function fecharModal(){
+document.getElementById('modalProduto').style.display = 'none';
 }
 
 fetch("https://opensheet.elk.sh/1wrHEulJvrvhqPHDxWUUh8fXgq5AKeBI7E6AKB8cBtRw/1")
 .then(res => res.json())
 .then(produtos => {
-
 todosProdutos = produtos;
 render(produtos);
-
-})
-.catch(err => {
-console.error(err);
-container.innerHTML = "<p style='padding:20px'>Erro ao carregar produtos.</p>";
 });
 </script>
-
-<footer>
-<div class="footer-content">
-
-<div class="footer-logo">
-<img src="imagens/logo.png">
-</div>
-
-<div class="footer-text">
-<h3>Use Aurora</h3>
-<p>Semijoias que valorizam sua beleza</p>
-</div>
-
-<div class="footer-icons">
-<a href="https://www.instagram.com/use.aaurora" target="_blank">
-<img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png">
-</a>
-
-<a href="https://wa.me/554799216167" target="_blank">
-<img src="https://cdn-icons-png.flaticon.com/512/733/733585.png">
-</a>
-</div>
-
-</div>
-</footer>
-
-<a class="whatsapp-float" href="https://wa.me/554799216167">
-<img src="https://cdn-icons-png.flaticon.com/512/733/733585.png">
-</a>
 
 </body>
 </html>
