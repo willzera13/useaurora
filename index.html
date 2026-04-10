@@ -194,15 +194,16 @@ top:0;
 left:0;
 width:100%;
 height:100%;
-background:rgba(0,0,0,0.9);
+background:rgba(0,0,0,0.95);
 justify-content:center;
 align-items:center;
 z-index:1000;
+touch-action:none;
 }
 
 .zoom-img img{
-max-width:90%;
-max-height:90%;
+max-width:95%;
+max-height:95%;
 border-radius:12px;
 }
 
@@ -304,7 +305,7 @@ transform: scale(1.15);
 </div>
 
 <!-- 🔥 ZOOM -->
-<div id="zoomImg" class="zoom-img" onclick="fecharZoom()">
+<div id="zoomImg" class="zoom-img" onclick="fundoZoom(event)">
 <span class="fechar-zoom" onclick="fecharZoom()">×</span>
 <img id="imgZoom">
 </div>
@@ -369,14 +370,22 @@ function fecharModal(){
 document.getElementById('modalProduto').style.display = 'none';
 }
 
-// 🔥 ZOOM
+// 🔥 ZOOM MELHORADO
 function abrirZoom(){
 document.getElementById('zoomImg').style.display = 'flex';
 document.getElementById('imgZoom').src = document.getElementById('imgModal').src;
+document.body.style.overflow = "hidden";
 }
 
 function fecharZoom(){
 document.getElementById('zoomImg').style.display = 'none';
+document.body.style.overflow = "auto";
+}
+
+function fundoZoom(e){
+if(e.target.id === "zoomImg"){
+fecharZoom();
+}
 }
 
 fetch("https://opensheet.elk.sh/1wrHEulJvrvhqPHDxWUUh8fXgq5AKeBI7E6AKB8cBtRw/1")
