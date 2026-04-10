@@ -202,6 +202,57 @@ transform: scale(1.15) rotate(8deg);
 70%{box-shadow:0 0 0 15px rgba(37,211,102,0)}
 100%{box-shadow:0 0 0 0 rgba(37,211,102,0)}
 }
+
+/* SOBRE */
+.sobre{
+background:#fff;
+padding:50px 20px;
+margin-top:20px;
+}
+
+.sobre-container{
+max-width:1000px;
+margin:auto;
+display:flex;
+align-items:center;
+gap:40px;
+flex-wrap:wrap;
+}
+
+.sobre-img{
+flex:1;
+display:flex;
+justify-content:center;
+}
+
+.sobre-img img{
+width:280px;
+height:280px;
+object-fit:cover;
+border-radius:50%;
+box-shadow:0 10px 30px rgba(0,0,0,0.15);
+transition:0.3s;
+border:5px solid #f3e6ea;
+}
+
+.sobre-img img:hover{
+transform:scale(1.05);
+}
+
+.sobre-texto{
+flex:1;
+}
+
+.sobre-texto h2{
+font-size:28px;
+margin-bottom:15px;
+color:#b07a86;
+}
+
+.sobre-texto p{
+margin-bottom:10px;
+line-height:1.6;
+}
 </style>
 </head>
 
@@ -223,7 +274,6 @@ transform: scale(1.15) rotate(8deg);
 <div class="dots" id="dots"></div>
 </div>
 
-<!-- 🔥 CATEGORIAS -->
 <div class="categorias">
 <button class="cat-btn active" onclick="filtrar('todos', this)">Todos</button>
 <button class="cat-btn" onclick="filtrar('aneis', this)">Anéis</button>
@@ -234,9 +284,25 @@ transform: scale(1.15) rotate(8deg);
 
 <div class="container" id="produtos"></div>
 
-<script>
+<!-- SOBRE MIM -->
+<section class="sobre">
+  <div class="sobre-container">
 
-/* CARROSSEL */
+    <div class="sobre-img">
+      <img src="imagens/gabriela.jpg">
+    </div>
+
+    <div class="sobre-texto">
+      <h2>Sobre mim</h2>
+      <p>Oi, eu sou a <strong>Gabriela</strong>, tenho 20 anos e sou apaixonada por acessórios que realçam a beleza feminina.</p>
+      <p>Comecei a Use Aurora com o sonho de ter minha própria renda e ajudar outras mulheres a se sentirem mais confiantes e estilosas no dia a dia.</p>
+      <p>Cada peça é escolhida com carinho, pensando em qualidade, elegância e aquele toque especial que faz toda a diferença ✨</p>
+    </div>
+
+  </div>
+</section>
+
+<script>
 let index=0;
 const slides=document.getElementById('slides');
 const total=slides.children.length;
@@ -260,11 +326,6 @@ update();
 
 setInterval(()=>moveSlide(1),4000);
 update();
-
-
-/* =========================
-   PRODUTOS + CATEGORIAS
-   ========================= */
 
 const container = document.getElementById('produtos');
 
@@ -319,7 +380,6 @@ render(produtos);
 console.error(err);
 container.innerHTML = "<p style='padding:20px'>Erro ao carregar produtos.</p>";
 });
-
 </script>
 
 <footer>
