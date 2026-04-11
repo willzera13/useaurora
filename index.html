@@ -4,9 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Use Aurora</title>
-
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
 
@@ -168,15 +166,24 @@ font-size:48px;
 display:block;
 margin-bottom:10px;
 }
+
+/* MOBILE: 1 produto por linha */
+@media(max-width:600px){
+  .container{
+    grid-template-columns:1fr;
+    padding:12px;
+    gap:12px;
+  }
+  .produto img{
+    height:220px;
+  }
+}
 </style>
 </head>
-
 <body>
-
 <header>
 <img src="imagens/logo.png">
 </header>
-
 <!-- CARROSSEL -->
 <div class="carousel">
   <div class="slides" id="slides">
@@ -184,59 +191,47 @@ margin-bottom:10px;
     <div class="slide"><img src="https://images.unsplash.com/photo-1512496015851-a90fb38ba796"></div>
     <div class="slide"><img src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad"></div>
   </div>
-
   <button class="nav prev" onclick="move(-1)">❮</button>
   <button class="nav next" onclick="move(1)">❯</button>
 </div>
-
 <div class="categorias">
 <button class="cat-btn active" onclick="filtrar('aneis', this)">Anéis</button>
 <button class="cat-btn" onclick="filtrar('colares', this)">Colares</button>
 <button class="cat-btn" onclick="filtrar('pulseiras', this)">Pulseiras</button>
 <button class="cat-btn" onclick="filtrar('brincos', this)">Brincos</button>
 </div>
-
 <div class="container" id="produtos">
 <div class="sem-produtos" id="sem-produtos">
 <span>🛍️</span>
 Sem produtos disponíveis nessa categoria no momento.
 </div>
 </div>
-
 <!-- FOOTER COMPLETO -->
 <footer>
 <div class="footer-content">
-
 <div class="footer-logo">
 <img src="imagens/logo.png">
 </div>
-
 <div class="footer-text">
 <h3>Use Aurora</h3>
 <p>Semijoias que valorizam sua beleza</p>
 </div>
-
 <div class="footer-icons">
 <a href="mailto:Andrade06gabriela@gmail.com">
 <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png">
 </a>
-
 <a href="https://www.instagram.com/use.aaurora" target="_blank">
 <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png">
 </a>
-
 <a href="https://wa.me/554799216167" target="_blank">
 <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png">
 </a>
 </div>
-
 </div>
-
 <div class="footer-credit">
 <p>Desenvolvido por <strong>Willian Squena</strong></p>
 </div>
 </footer>
-
 <script>
 
 // CARROSSEL
@@ -250,7 +245,7 @@ slides.style.transform = `translateX(-${index * 100}%)`;
 
 setInterval(()=>move(1),4000);
 
-// SEU JS ORIGINAL
+// JS PRODUTOS
 function converterLinkDrive(url) {
   if (!url) return url;
   const match1 = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
@@ -304,6 +299,5 @@ fetch("https://opensheet.elk.sh/1wrHEulJvrvhqPHDxWUUh8fXgq5AKeBI7E6AKB8cBtRw/1")
   });
 
 </script>
-
 </body>
 </html>
