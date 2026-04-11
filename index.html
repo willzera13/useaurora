@@ -27,20 +27,30 @@ box-shadow:0 2px 10px rgba(0,0,0,0.05)
 header img{max-width:300px}
 
 /* CARROSSEL */
-.carrossel{
-position:relative;
-width:100%;
-height:250px;
+.carousel{
+max-width:1100px;
+margin:20px auto;
 overflow:hidden;
+border-radius:12px;
+position:relative;
 }
 
-.carrossel img{
+.slides{
+display:flex;
+transition:.5s;
+}
+
+.slide{
+min-width:100%;
+}
+
+.slide img{
 width:100%;
-height:100%;
+height:260px;
 object-fit:cover;
 }
 
-.carrossel-btn{
+.nav{
 position:absolute;
 top:50%;
 transform:translateY(-50%);
@@ -53,22 +63,6 @@ cursor:pointer;
 
 .prev{left:10px}
 .next{right:10px}
-
-/* DESTAQUE */
-.destaque{
-padding:30px 20px;
-text-align:center;
-}
-
-.destaque h2{
-margin-bottom:20px;
-}
-
-.destaque-container{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:15px;
-}
 
 /* CATEGORIAS */
 .categorias{
@@ -372,67 +366,53 @@ margin-bottom:10px;
 </header>
 
 <!-- CARROSSEL -->
-<div class="carrossel">
-<button class="carrossel-btn prev" onclick="mudarSlide(-1)">‹</button>
-<img id="carrossel-img" src="https://images.unsplash.com/photo-1596462502278-27bfdc403348">
-<button class="carrossel-btn next" onclick="mudarSlide(1)">›</button>
+<div class="carousel">
+  <div class="slides" id="slides">
+    <div class="slide"><img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9"></div>
+    <div class="slide"><img src="https://images.unsplash.com/photo-1512496015851-a90fb38ba796"></div>
+    <div class="slide"><img src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad"></div>
+  </div>
+  <button class="nav prev" onclick="move(-1)">❮</button>
+  <button class="nav next" onclick="move(1)">❯</button>
 </div>
 
-<!-- DESTAQUE -->
-<section class="destaque">
-<h2>Produtos em Destaque</h2>
-
-<div class="destaque-container">
-
-<div class="produto">
-<img src="https://images.unsplash.com/photo-1617038220319-276d3cfab638">
-<div class="info">
-<div class="nome">Brinco Elegante</div>
-<div>Peça exclusiva para elevar sua elegância no dia a dia.</div>
-<div class="preco">R$ 39,90</div>
-</div>
+<div class="categorias">
+<button class="cat-btn active" onclick="filtrar('aneis', this)">Anéis</button>
+<button class="cat-btn" onclick="filtrar('colares', this)">Colares</button>
+<button class="cat-btn" onclick="filtrar('pulseiras', this)">Pulseiras</button>
+<button class="cat-btn" onclick="filtrar('brincos', this)">Brincos</button>
 </div>
 
-<div class="produto">
-<img src="https://images.unsplash.com/photo-1617038220319-276d3cfab638">
-<div class="info">
-<div class="nome">Brinco Luxo</div>
-<div>Peça exclusiva para elevar sua elegância no dia a dia.</div>
-<div class="preco">R$ 39,90</div>
+<div class="container" id="produtos">
+<div class="sem-produtos" id="sem-produtos">
+<span>🛍️</span>
+Sem produtos disponíveis nessa categoria no momento.
 </div>
 </div>
 
-<div class="produto">
-<img src="https://images.unsplash.com/photo-1617038220319-276d3cfab638">
-<div class="info">
-<div class="nome">Colar Shine</div>
-<div>Peça exclusiva para elevar sua elegância no dia a dia.</div>
-<div class="preco">R$ 39,90</div>
-</div>
-</div>
-
-</div>
-</section>
-
-<!-- RESTO DO SEU SITE CONTINUA IGUAL -->
-<!-- (mantive tudo abaixo exatamente como você enviou) -->
+<!-- TODO RESTO DO SEU CÓDIGO CONTINUA IGUAL -->
 
 <script>
 // CARROSSEL
-const imagens = [
-"https://images.unsplash.com/photo-1596462502278-27bfdc403348",
-"https://images.unsplash.com/photo-1617038220319-276d3cfab638",
-"https://images.unsplash.com/photo-1588449668365-d15e397f6787"
-];
+let index = 0;
+const slides = document.getElementById('slides');
 
-let slide = 0;
-
-function mudarSlide(dir){
-slide = (slide + dir + imagens.length) % imagens.length;
-document.getElementById("carrossel-img").src = imagens[slide];
+function move(dir){
+index = (index + dir + 3) % 3;
+slides.style.transform = `translateX(-${index * 100}%)`;
 }
 
-setInterval(()=> mudarSlide(1), 4000);
+setInterval(()=>move(1),4000);
+
+// SEU JS ORIGINAL (MANTIDO)
+function converterLinkDrive(url) {
+if (!url) return url;
+const match1 = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+if (match1) return `https://drive.google.com/thumbnail?id=${match1[1]}&sz=w800`;
+const match2 = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+if (match2) return `https://drive.google.com/thumbnail?id=${match2[1]}&sz=w800`;
+return url;
+}
 </script>
 
 </body>
