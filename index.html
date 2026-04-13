@@ -6,9 +6,9 @@
   <title>Use Aurora</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🩷</text></svg>">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-
+  
   <style>
-    /* (SEU CSS ORIGINAL INTACTO - NÃO ALTEREI NADA) */
+    /* (SEU CSS ORIGINAL - NÃO ALTERADO) */
     *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
     body{background:linear-gradient(180deg,#f8f5f2 0%, #efe7eb 100%);color:#333}
     header{background:#fff;padding:10px;display:flex;justify-content:center;align-items:center;box-shadow:0 2px 10px rgba(0,0,0,0.05)}
@@ -37,6 +37,14 @@
     @media(max-width:768px){
       .container{grid-template-columns:1fr}
     }
+
+    .sem-produtos{
+      display:none;
+      grid-column:1/-1;
+      text-align:center;
+      padding:60px 20px;
+      color:#aaa;
+    }
   </style>
 </head>
 
@@ -46,6 +54,7 @@
   <img src="imagens/logo.png">
 </header>
 
+<!-- CARROSSEL -->
 <div class="carousel">
   <div class="slides" id="slides">
     <div class="slide"><img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9"></div>
@@ -56,6 +65,7 @@
   <button class="nav next" onclick="move(1)">❯</button>
 </div>
 
+<!-- CATEGORIAS -->
 <div class="categorias">
   <button class="cat-btn active" onclick="filtrar('aneis', this)">Anéis</button>
   <button class="cat-btn" onclick="filtrar('colares', this)">Colares</button>
@@ -63,9 +73,42 @@
   <button class="cat-btn" onclick="filtrar('brincos', this)">Brincos</button>
 </div>
 
-<div class="container" id="produtos"></div>
+<!-- PRODUTOS -->
+<div class="container" id="produtos">
+  <div class="sem-produtos" id="sem-produtos">
+    <span>🛍️</span>
+    Sem produtos disponíveis nessa categoria no momento.
+  </div>
+</div>
+
+<!-- SOBRE -->
+<section class="sobre">
+  <div class="sobre-container">
+    <div class="sobre-img">
+      <img src="imagens/gabriela.jpg">
+    </div>
+    <div class="sobre-texto">
+      <h2>Sobre mim</h2>
+      <p>Oi, eu sou a <strong>Gabriela</strong>...</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-content">
+    <div class="footer-logo">
+      <img src="imagens/logo.png">
+    </div>
+    <div class="footer-text">
+      <h3>Use Aurora</h3>
+      <p>Semijoias que valorizam sua beleza</p>
+    </div>
+  </div>
+</footer>
 
 <script>
+// CARROSSEL
 let index = 0;
 const slides = document.getElementById('slides');
 
@@ -76,36 +119,34 @@ function move(dir){
 
 setInterval(()=>move(1),4000);
 
-// 🔥 BACKUP DE PRODUTOS (NOVO)
+// 🔥 BACKUP (NOVO)
 const produtosBackup = [
   {
     nome: "Anel Elegante",
     preco: "39,90",
     categoria: "aneis",
     imagem: "https://images.unsplash.com/photo-1605100804763-247f67b3557e"
-  },
-  {
-    nome: "Colar Luxo",
-    preco: "59,90",
-    categoria: "colares",
-    imagem: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f"
-  },
-  {
-    nome: "Pulseira Fina",
-    preco: "29,90",
-    categoria: "pulseiras",
-    imagem: "https://images.unsplash.com/photo-1611652022419-a9419f74343d"
   }
 ];
 
 const whatsapp = "554799216167";
 const container = document.getElementById('produtos');
+const semProdutos = document.getElementById('sem-produtos');
 let todosProdutos = [];
 
 function render(lista){
   container.innerHTML = '';
-  lista.forEach((p)=>{
-    const div = document.createElement('div');
+  container.appendChild(semProdutos);
+
+  if(lista.length === 0){
+    semProdutos.style.display='block';
+    return;
+  }
+
+  semProdutos.style.display='none';
+
+  lista.forEach(p=>{
+    const div=document.createElement('div');
     div.className='produto';
     div.innerHTML=`
       <img src="${p.imagem}">
@@ -129,7 +170,7 @@ function filtrar(cat,btn){
 fetch("https://opensheet.elk.sh/1wrHEulJvrvhqPHDxWUUh8fXgq5AKeBI7E6AKB8cBtRw/1")
 .then(r=>r.json())
 .then(p=>{
-  if(!p || p.length === 0) throw "sem dados";
+  if(!p || p.length===0) throw "erro";
   todosProdutos = p;
   render(p.filter(p=>p.categoria.toLowerCase()==='aneis'));
 })
