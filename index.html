@@ -9,47 +9,152 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
-body{background:linear-gradient(180deg,#f8f5f2 0%, #efe7eb 100%);color:#333}
 
-header{background:#fff;padding:10px;display:flex;justify-content:center;box-shadow:0 2px 10px rgba(0,0,0,0.05)}
+body{
+background:linear-gradient(180deg,#f8f5f2 0%, #efe7eb 100%);
+color:#333
+}
+
+header{
+background:#fff;
+padding:10px;
+display:flex;
+justify-content:center;
+align-items:center;
+box-shadow:0 2px 10px rgba(0,0,0,0.05)
+}
+
 header img{max-width:300px}
 
 /* CARROSSEL */
-.carousel{max-width:1100px;margin:20px auto;overflow:hidden;border-radius:12px;position:relative}
+.carousel{
+max-width:1100px;
+margin:20px auto;
+overflow:hidden;
+border-radius:12px;
+position:relative;
+}
+
 .slides{display:flex;transition:.5s}
 .slide{min-width:100%}
-.slide img{width:100%;height:260px;object-fit:cover}
-.nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.4);color:#fff;border:none;padding:10px;cursor:pointer}
-.prev{left:10px}.next{right:10px}
+
+.slide img{
+width:100%;
+height:260px;
+object-fit:cover;
+}
+
+.nav{
+position:absolute;
+top:50%;
+transform:translateY(-50%);
+background:rgba(0,0,0,0.4);
+color:#fff;
+border:none;
+padding:10px;
+cursor:pointer;
+}
+
+.prev{left:10px}
+.next{right:10px}
 
 /* CATEGORIAS */
-.categorias{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:15px 0}
-.cat-btn{padding:8px 14px;border:none;border-radius:20px;cursor:pointer;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,0.1)}
-.cat-btn.active{background:#b07a86;color:#fff}
+.categorias{
+display:flex;
+justify-content:center;
+gap:10px;
+flex-wrap:wrap;
+margin:15px 0;
+}
+
+.cat-btn{
+padding:8px 14px;
+border:none;
+border-radius:20px;
+cursor:pointer;
+background:#fff;
+box-shadow:0 2px 8px rgba(0,0,0,0.1);
+}
+
+.cat-btn.active{
+background:#b07a86;
+color:#fff;
+}
 
 /* INFANTIL */
-.cat-btn.infantil{background:linear-gradient(45deg,#ff9ecb,#ffd6ec);color:#fff;font-weight:bold}
-.cat-btn.infantil.active{background:#ff69b4}
+.cat-btn.infantil{
+background:linear-gradient(45deg,#ff9ecb,#ffd6ec);
+color:#fff;
+font-weight:bold;
+}
+
+.cat-btn.infantil.active{
+background:#ff69b4;
+}
 
 /* PRODUTOS */
-.container{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;padding:20px}
-.produto{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.08)}
-.produto img{width:100%;height:200px;object-fit:cover;cursor:pointer}
+.container{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:15px;
+padding:20px
+}
+
+.produto{
+background:#fff;
+border-radius:12px;
+overflow:hidden;
+box-shadow:0 4px 12px rgba(0,0,0,0.08)
+}
+
+.produto img{
+width:100%;
+height:200px;
+object-fit:cover;
+}
+
 .info{padding:10px}
+.nome{font-weight:600}
 .preco{color:#b07a86;font-weight:bold}
 
 /* BOTÃO */
-.btn{display:block;background:#25D366;color:#fff;padding:8px;text-align:center;border-radius:6px;margin-top:5px;text-decoration:none}
+.btn{
+display:block;
+background:#25D366;
+color:#fff;
+padding:8px;
+text-align:center;
+border-radius:6px;
+margin-top:5px;
+text-decoration:none;
+}
 
 /* FOOTER */
-footer{background:#fff;margin-top:30px;padding:30px}
-.footer-content{display:flex;justify-content:space-between;max-width:1000px;margin:auto}
+footer{
+background:#fff;
+margin-top:30px;
+padding:30px;
+text-align:center;
+}
 
 /* WHATS */
-.whatsapp-float{position:fixed;bottom:20px;right:20px;background:#25D366;width:60px;height:60px;border-radius:50%;display:flex;justify-content:center;align-items:center}
+.whatsapp-float{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#25D366;
+width:60px;
+height:60px;
+border-radius:50%;
+display:flex;
+justify-content:center;
+align-items:center;
+}
 .whatsapp-float img{width:30px}
 
-@media(max-width:768px){.container{grid-template-columns:1fr}}
+@media(max-width:768px){
+.container{grid-template-columns:1fr}
+}
 </style>
 </head>
 
@@ -59,38 +164,44 @@ footer{background:#fff;margin-top:30px;padding:30px}
 <img src="imagens/logo.png">
 </header>
 
+<!-- CARROSSEL -->
 <div class="carousel">
-<div class="slides" id="slides">
-<div class="slide"><img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9"></div>
-<div class="slide"><img src="https://images.unsplash.com/photo-1512496015851-a90fb38ba796"></div>
-<div class="slide"><img src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad"></div>
-</div>
-<button class="nav prev" onclick="move(-1)">❮</button>
-<button class="nav next" onclick="move(1)">❯</button>
+  <div class="slides" id="slides">
+    <div class="slide"><img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9"></div>
+    <div class="slide"><img src="https://images.unsplash.com/photo-1512496015851-a90fb38ba796"></div>
+    <div class="slide"><img src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad"></div>
+  </div>
+  <button class="nav prev" onclick="move(-1)">❮</button>
+  <button class="nav next" onclick="move(1)">❯</button>
 </div>
 
+<!-- CATEGORIAS -->
 <div class="categorias">
-<button class="cat-btn active" onclick="filtrar('aneis',this)">Anéis</button>
+<button class="cat-btn active" onclick="filtrar('todos',this)">Todos</button>
+<button class="cat-btn" onclick="filtrar('aneis',this)">Anéis</button>
 <button class="cat-btn" onclick="filtrar('colares',this)">Colares</button>
 <button class="cat-btn" onclick="filtrar('pulseiras',this)">Pulseiras</button>
 <button class="cat-btn" onclick="filtrar('brincos',this)">Brincos</button>
 <button class="cat-btn infantil" onclick="filtrar('infantil',this)">Infantil</button>
 </div>
 
+<!-- PRODUTOS -->
 <div class="container" id="produtos"></div>
 
+<!-- FOOTER -->
 <footer>
-<div class="footer-content">
-<div>Use Aurora</div>
-<div>Semijoias</div>
-</div>
+<p><strong>Use Aurora</strong></p>
+<p>Semijoias que valorizam sua beleza</p>
 </footer>
 
-<a class="whatsapp-float" href="https://wa.me/554799216167">
+<!-- WHATS -->
+<a class="whatsapp-float" href="https://wa.me/554799216167" target="_blank">
 <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png">
 </a>
 
 <script>
+
+// CARROSSEL
 let index=0;
 function move(dir){
 index=(index+dir+3)%3;
@@ -98,37 +209,72 @@ document.getElementById('slides').style.transform=`translateX(-${index*100}%)`;
 }
 setInterval(()=>move(1),4000);
 
+// CONVERTER LINK DRIVE
+function converterLinkDrive(url){
+if(!url) return "";
+const match=url.match(/[-\w]{25,}/);
+if(match) return `https://drive.google.com/thumbnail?id=${match[0]}&sz=w800`;
+return url;
+}
+
 const container=document.getElementById('produtos');
 let todosProdutos=[];
 
+// RENDER
 function render(lista){
 container.innerHTML="";
+
+if(lista.length===0){
+container.innerHTML="<p style='padding:20px'>Sem produtos.</p>";
+return;
+}
+
 lista.forEach(p=>{
 const div=document.createElement('div');
 div.className='produto';
+
 div.innerHTML=`
-<img src="${p.imagem}">
+<img src="${converterLinkDrive(p.imagem)}">
 <div class="info">
-<div>${p.nome}</div>
-<div class="preco">R$ ${p.preco}</div>
-<a class="btn" href="https://wa.me/554799216167?text=Quero ${p.nome}" target="_blank">Comprar</a>
-</div>`;
+<div class="nome">${p.nome || "Produto"}</div>
+<div class="preco">R$ ${p.preco || "0,00"}</div>
+<a class="btn" href="https://wa.me/554799216167?text=${encodeURIComponent("Quero "+(p.nome||"produto"))}" target="_blank">Comprar</a>
+</div>
+`;
+
 container.appendChild(div);
 });
 }
 
+// FILTRO
 function filtrar(cat,btn){
 document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
 btn.classList.add('active');
-render(todosProdutos.filter(p=>p.categoria.toLowerCase()===cat));
+
+if(cat==="todos"){
+render(todosProdutos);
+return;
 }
 
+const filtrados=todosProdutos.filter(p=>{
+if(!p.categoria) return false;
+return p.categoria.toLowerCase().trim()===cat;
+});
+
+render(filtrados);
+}
+
+// FETCH
 fetch("https://opensheet.elk.sh/1wrHEulJvrvhqPHDxWUUh8fXgq5AKeBI7E6AKB8cBtRw/1")
 .then(r=>r.json())
 .then(p=>{
 todosProdutos=p;
-render(p.filter(p=>p.categoria.toLowerCase()==='aneis'));
+render(p);
+})
+.catch(()=>{
+container.innerHTML="<p style='padding:20px'>Erro ao carregar produtos.</p>";
 });
+
 </script>
 
 </body>
