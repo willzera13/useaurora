@@ -584,10 +584,23 @@ function render(lista) {
   });
 }
 
+function normalizar(texto){
+  return texto
+    .toLowerCase()
+    .trim()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+}
+
 function filtrar(cat, btn) {
   document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  render(todosProdutos.filter(p => p.categoria.toLowerCase() === cat));
+
+  render(
+    todosProdutos.filter(p => 
+      normalizar(p.categoria) === normalizar(cat)
+    )
+  );
 }
 
 function abrirModal(i) {
