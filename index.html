@@ -11,6 +11,23 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
 
+.badge{
+position:absolute;
+background:#ff6fb5;
+color:#fff;
+padding:5px 10px;
+font-size:12px;
+border-radius:8px;
+top:10px;
+left:10px;
+z-index:2;
+font-weight:600;
+box-shadow:0 2px 8px rgba(0,0,0,0.2);
+}
+.produto{
+position:relative;
+}
+  
 body{
 background:linear-gradient(180deg,#f8f5f2 0%, #efe7eb 100%);
 color:#333
@@ -563,6 +580,7 @@ let produtoAtual = null;
 let imgAtual = 0;
 
 function render(lista) {
+  const destaque = normalizar(p.destaque) === 'sim';
   container.innerHTML = '';
   container.appendChild(semProdutos);
 
@@ -572,21 +590,46 @@ function render(lista) {
   }
 
   semProdutos.style.display = 'none';
+  
+lista.forEach((p) => {
+  const imagem = converterLinkDrive(p.imagem);
 
-  lista.forEach((p) => {
-    const imagem = converterLinkDrive(p.imagem);
-    const div = document.createElement('div');
-    div.className = 'produto';
-    div.innerHTML = `
-      <img src="${imagem}" onclick="abrirModal(${todosProdutos.indexOf(p)})">
-      <div class="info">
-        <div class="nome">${p.nome}</div>
-        <div class="preco">R$ ${p.preco}</div>
-        <a class="btn" href="https://wa.me/${whatsapp}?text=Olá! Tenho interesse no produto: ${encodeURIComponent(p.nome)} - R$ ${p.preco}" target="_blank">💬 Quero esse produto</a>
-      </div>`;
-    container.appendChild(div);
-  });
-}
+  // verifica se é destaque
+  const destaque = (p.destaque || "").toLowerCase();
+
+  const badge = 
+    destaque === "sim" || 
+    destaque === "true" || 
+    destaque === "mais vendido"
+      ? `<div style="
+          position:absolute;
+          top:10px;
+          left:10px;
+          background:#ff6fb5;
+          color:#fff;
+          padding:4px 8px;
+          border-radius:8px;
+          font-size:12px;
+          font-weight:600;
+          box-shadow:0 2px 6px rgba(0,0,0,0.2);
+        ">🔥 Mais vendido</div>`
+      : "";
+
+  const div = document.createElement('div');
+  div.className = 'produto';
+  div.style.position = 'relative';
+
+  div.innerHTML = `
+    ${badge}
+    <img src="${imagem}" onclick="abrirModal(${todosProdutos.indexOf(p)})">
+    <div class="info">
+      <div class="nome">${p.nome}</div>
+      <div class="preco">R$ ${p.preco}</div>
+      <a class="btn" href="https://wa.me/${whatsapp}?text=Olá! Tenho interesse no produto: ${encodeURIComponent(p.nome)} - R$ ${p.preco}" target="_blank">💬 Quero esse produto</a>
+    </div>`;
+
+  container.appendChild(div);
+});
 
 function normalizar(texto){
   return texto
