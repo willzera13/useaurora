@@ -556,13 +556,21 @@ let index = 0;
 const slides = document.getElementById('slides');
 
 function move(dir){
-index = (index + dir + 2) % 2;
-slides.style.transform = `translateX(-${index * 100}%)`;
+  index = (index + dir + 2) % 2;
+  slides.style.transform = `translateX(-${index * 100}%)`;
 }
 
 setInterval(()=>move(1),4000);
 
-// JS ORIGINAL COMPLETO
+// UTIL
+function normalizar(texto){
+  return (texto || "")
+    .toLowerCase()
+    .trim()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+}
+
 function converterLinkDrive(url) {
   if (!url) return url;
   const match1 = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
@@ -575,12 +583,15 @@ function converterLinkDrive(url) {
 const whatsapp = "554799216167";
 const container = document.getElementById('produtos');
 const semProdutos = document.getElementById('sem-produtos');
+const loading = document.getElementById('loading');
+
 let todosProdutos = [];
 let produtoAtual = null;
 let imgAtual = 0;
 
+// RENDER
 function render(lista) {
-  const destaque = normalizar(p.destaque) === 'sim';
+
   container.innerHTML = '';
   container.appendChild(semProdutos);
 
@@ -590,55 +601,38 @@ function render(lista) {
   }
 
   semProdutos.style.display = 'none';
-  
-lista.forEach((p) => {
-  const imagem = converterLinkDrive(p.imagem);
 
-  // verifica se é destaque
-  const destaque = (p.destaque || "").toLowerCase();
+  lista.forEach((p) => {
 
-  const badge = 
-    destaque === "sim" || 
-    destaque === "true" || 
-    destaque === "mais vendido"
-      ? `<div style="
-          position:absolute;
-          top:10px;
-          left:10px;
-          background:#ff6fb5;
-          color:#fff;
-          padding:4px 8px;
-          border-radius:8px;
-          font-size:12px;
-          font-weight:600;
-          box-shadow:0 2px 6px rgba(0,0,0,0.2);
-        ">🔥 Mais vendido</div>`
-      : "";
+    const imagem = converterLinkDrive(p.imagem);
 
-  const div = document.createElement('div');
-  div.className = 'produto';
-  div.style.position = 'relative';
+    // destaque
+    const destaque = normalizar(p.destaque);
 
-  div.innerHTML = `
-    ${badge}
-    <img src="${imagem}" onclick="abrirModal(${todosProdutos.indexOf(p)})">
-    <div class="info">
-      <div class="nome">${p.nome}</div>
-      <div class="preco">R$ ${p.preco}</div>
-      <a class="btn" href="https://wa.me/${whatsapp}?text=Olá! Tenho interesse no produto: ${encodeURIComponent(p.nome)} - R$ ${p.preco}" target="_blank">💬 Quero esse produto</a>
-    </div>`;
+    const badge = 
+      destaque === "sim" || 
+      destaque === "true" || 
+      destaque === "mais vendido"
+        ? `<div class="badge">🔥 Mais vendido</div>`
+        : "";
 
-  container.appendChild(div);
-});
+    const div = document.createElement('div');
+    div.className = 'produto';
 
-function normalizar(texto){
-  return texto
-    .toLowerCase()
-    .trim()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "");
+    div.innerHTML = `
+      ${badge}
+      <img src="${imagem}" onclick="abrirModal(${todosProdutos.indexOf(p)})">
+      <div class="info">
+        <div class="nome">${p.nome}</div>
+        <div class="preco">R$ ${p.preco}</div>
+        <a class="btn" href="https://wa.me/${whatsapp}?text=Olá! Tenho interesse no produto: ${encodeURIComponent(p.nome)} - R$ ${p.preco}" target="_blank">💬 Quero esse produto</a>
+      </div>`;
+
+    container.appendChild(div);
+  });
 }
 
+// FILTRO
 function filtrar(cat, btn) {
   document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
@@ -650,14 +644,18 @@ function filtrar(cat, btn) {
   );
 }
 
+// MODAL
 function abrirModal(i) {
   produtoAtual = i;
   imgAtual = 0;
   const p = todosProdutos[i];
+
   document.getElementById('modal-nome').textContent = p.nome;
   document.getElementById('modal-preco').textContent = `R$ ${p.preco}`;
   document.getElementById('modal-img').src = converterLinkDrive(p.imagem);
-  document.getElementById('modal-btn').href = `https://wa.me/${whatsapp}?text=Olá! Tenho interesse no produto: ${encodeURIComponent(p.nome)} - R$ ${p.preco}`;
+  document.getElementById('modal-btn').href =
+    `https://wa.me/${whatsapp}?text=Olá! Tenho interesse no produto: ${encodeURIComponent(p.nome)} - R$ ${p.preco}`;
+
   document.getElementById('modal').style.display = 'flex';
 }
 
@@ -669,6 +667,7 @@ function trocarImg(dir) {
   const p = todosProdutos[produtoAtual];
   const imagens = p.imagens ? p.imagens.split(',').map(s => converterLinkDrive(s.trim())) : [];
   const todas = [converterLinkDrive(p.imagem), ...imagens];
+
   imgAtual = (imgAtual + dir + todas.length) % todas.length;
   document.getElementById('modal-img').src = todas[imgAtual];
 }
@@ -687,14 +686,21 @@ window.onclick = function(e) {
   if (e.target === document.getElementById('zoom')) fecharZoom();
 }
 
+// FETCH
 fetch("https://opensheet.elk.sh/1wrHEulJvrvhqPHDxWUUh8fXgq5AKeBI7E6AKB8cBtRw/1")
   .then(r => r.json())
   .then(p => {
     todosProdutos = p;
-    render(p.filter(p => p.categoria.toLowerCase() === 'aneis'));
+
+    // remove loading
+    if (loading) loading.remove();
+
+    render(p.filter(p => normalizar(p.categoria) === 'aneis'));
+  })
+  .catch(() => {
+    if (loading) loading.innerHTML = "❌ Erro ao carregar produtos";
   });
 
 </script>
-
 </body>
 </html>
